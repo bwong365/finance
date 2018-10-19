@@ -1,30 +1,25 @@
-require('dotenv').config({ path: '../'});
-const { Pool } = require('pg');
-const db = new Pool({
-  user: process.env.PGUSER,
-  host: process.env.PGHOST,
-  database: process.env.PGDATABASE,
-  password: process.env.PGPASS,
-  port: process.env.PGPORT
-});
+const queryPG = require('./queryPG');
 
-module.exports = async function register(req, res) {
-  console.log('gothere');
-  await db.connect();
+module.exports = function register(req, res) {
   const { user, name, hash } = req.body;
   const query = {
     text: 'INSERT INTO users (username, name, pwhash) VALUES ($1, $2, $3)',
     values: [user, name, hash]
   }
-  db.query(query, (err, data) => {
-    if (err) {
+
+  // handle query promise
+  queryPG(query)
+    .then(dbData => {
+      console.log(dbData);
+      res.status(201);
       res.json({
-        error: err.detail
+        details: dbData
       });
-      res.end();
-    } else {
-      res.sendStatus(201);
-      res.end();
-    }
-  })
+      //res.redirect('/login');
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(400);
+      res.json(err.detail);
+    });
 }

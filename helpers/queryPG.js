@@ -10,7 +10,7 @@ module.exports = async function queryPG(query) {
     port: process.env.PGPORT
   });
 
-  // thanks, async
+  // thanks, async (and Rob for teaching me async)
   await db.connect();
   return db.query(query);  
 }

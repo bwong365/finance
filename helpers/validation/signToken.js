@@ -1,6 +1,9 @@
 const jwt = require('jsonwebtoken');
 
-// Function assumes user has already been verified
+/**
+ * Sign a token, assume the user has already
+ * been verified by middleware
+ */
 module.exports = function login(req, res) {
   const { user } = req.body;
   const secret = process.env.JWT_SECRET_OR_KEY;

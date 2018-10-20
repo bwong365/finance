@@ -1,6 +1,9 @@
 const dbQuery = require('../queryPG');
 const monetize = require('../monetize');
 
+/**
+ * Create a new transaction row and update user balance in db
+ */
 module.exports = async function buyStock(req, res) {
   const price = req.quote.price;
   const shares = req.body.shares;
@@ -25,8 +28,11 @@ module.exports = async function buyStock(req, res) {
   }
 
   try {
+    // Call parallel queries
     const updated = dbQuery(queryUpdate);
     const inserted = dbQuery(queryInsert);
+
+    // Await, but leave parallel
     const done = await updated && await inserted;
     res.send({message: 'Success!'});
   } catch (e) {

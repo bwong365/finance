@@ -1,7 +1,10 @@
 const bcrypt = require('bcryptjs');
 const dbQuery = require('../queryPG');
 
-// password validation middleware
+/**
+ * Middleware
+ * Query db to see if password matches username
+ */
 module.exports = async function verifyUser(req, res, next) {
   
   const { user, password } = req.body;

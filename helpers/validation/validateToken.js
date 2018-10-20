@@ -1,6 +1,11 @@
 const jwt = require('jsonwebtoken');
 const dbQuery = require('../queryPG');
 
+/**
+ * Middleware
+ * Verify request token and attach username
+ * from the token to the request as req.user
+ */
 module.exports = function requireToken(req, res, next) {
   // Get token from bearerHeader
   const secret = process.env.JWT_SECRET_OR_KEY

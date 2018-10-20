@@ -1,5 +1,9 @@
 const axios = require('axios');
 
+/**
+ * Middleware
+ * Attach a quote: {symbol, price, change} to the request as req.quote
+ */
 module.exports = async function getQuote(req, res, next) {
   // Stocks from Alpha Vantage
   const url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=';

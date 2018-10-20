@@ -30,5 +30,5 @@ router.route('/quote/:symbol').get(validateToken, getQuote, sendQuote);
 router.route('/buy').post(validateToken, getQuote, getBalance, buyStock);
 
 // get stock quotes
-// sell stocks
+router.route('/sell').post(validateToken, getQuote, getBalance, sellStock);
 module.exports = router;

@@ -1,5 +1,8 @@
 const dbQuery = require('../queryPG');
 
+/**
+ * Registers users into the database
+ */
 module.exports = function register(req, res) {
   // Extract variables from req.body and build the query
   const { user, name, hash } = req.body;

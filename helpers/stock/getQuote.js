@@ -14,7 +14,7 @@ module.exports = async function getQuote(req, res, next) {
     const { '05. price': price, '09. change': change } = quoteData.data['Global Quote'];
     
     // Modify the request body with a quote containing the symbol, price, and deltaPrice
-    req.body.quote = {
+    req.quote = {
       symbol,
       price,
       change

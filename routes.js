@@ -1,34 +1,66 @@
 const router = require('express').Router();
 
-const buyStock = require('./helpers/stock/buyStock');
-const getQuote = require('./helpers/stock/getQuote');
-const sendQuote = require('./helpers/stock/sendQuote');
-const getBalance = require('./helpers/stock/getBalance');
+// Stock helpers
+const addTransaction       = require('./helpers/stock/addTransaction');
+const buyStock             = require('./helpers/stock/buyStock');
+const getBalance           = require('./helpers/stock/getBalance');
+const getShareInfo         = require('./helpers/stock/getShareInfo');
+const getQuote             = require('./helpers/stock/getQuote');
+const requireEnoughShares  = require('./helpers/stock/requireEnoughShares');
+const sellStock            = require('./helpers/stock/sellStock');
+const sendQuote            = require('./helpers/stock/sendQuote');
+const validateShareRequest = require('./helpers/stock/validateShareRequest');
 
-const hashpw = require('./helpers/validation/hashpw');
-const register = require('./helpers/validation/register');
-const signToken = require('./helpers/validation/signToken');
-const validateToken = require('./helpers/validation/validateToken');
+// Validation helpers
+const hashpw                = require('./helpers/validation/hashpw');
+const register              = require('./helpers/validation/register');
+const signToken             = require('./helpers/validation/signToken');
 const validateLoginPassword = require('./helpers/validation/validateLoginPassword');
+const validateToken         = require('./helpers/validation/validateToken');
 
+module.exports = router;
 
 router.route('/').get((_, res) => {
   res.json({message: 'Welcome to finance!'});
 })
 
 // Registration
-router.route('/register').post(hashpw, register);
+router.route('/register')
+  .post(hashpw, register);
 
 // Login
-router.route('/login').post(validateLoginPassword, signToken);
+router.route('/login')
+  .post(validateLoginPassword, signToken);
+
+// Protected Routes Below
+router.use(validateToken);
+
+// Keep getQuote in individual chains, to read params
+
+// Get stock price
+router.route('/quote/:symbol')
+  .get(getQuote, sendQuote);
+
+// Buy stock
+router.route('/buy')
+  .post(
+    validateShareRequest,
+    getQuote,
+    getBalance,
+    buyStock,
+    addTransaction
+  );
+
+// Sell stock
+router.route('/sell')
+  .post(
+    validateShareRequest,
+    getShareInfo,
+    requireEnoughShares,
+    getQuote,
+    getBalance,
+    sellStock,
+    addTransaction
+  );
+
 // change password
-
-// Get stock prices
-router.route('/quote/:symbol').get(validateToken, getQuote, sendQuote);
-
-// Buy stocks
-router.route('/buy').post(validateToken, getQuote, getBalance, buyStock);
-
-// get stock quotes
-router.route('/sell').post(validateToken, getQuote, getBalance, sellStock);
-module.exports = router;

@@ -1,4 +1,4 @@
-const dbQuery = require('../queryPG');
+const db = require('../queryPG');
 
 /**
  * Middleware
@@ -11,8 +11,8 @@ module.exports = async function getBalance(req, res, next) {
   }
 
   try {
-    const dbData = await dbQuery(query);
-    req.balance = dbData.rows[0].balance;
+    const dbData = await db(query);
+    req.balance = Number(dbData.rows[0].balance);
     next();
   } catch (e) {
     if (e) {

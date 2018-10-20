@@ -13,8 +13,8 @@ module.exports = function requireToken(req, res, next) {
 
   // Abort if the token is of an invalid format or does not exist
   if (typeof value === 'undefined') {
-    res.status(403);  // You shall not pass
-    res.redirect('/login');
+    console.log('token missing');
+    res.sendStatus(403);  // You shall not pass
     return;
   }
 
@@ -24,8 +24,8 @@ module.exports = function requireToken(req, res, next) {
   // Abort if the token cannot be decoded
   jwt.verify(token, secret, (err, decoded) => {
     if (err) {
-      res.status(403);
-      res.redirect('/login');
+      console.log(err);
+      res.sendStatus(403);
       return
     }
     
@@ -37,12 +37,12 @@ module.exports = function requireToken(req, res, next) {
 
     dbQuery(query)
       .then(dbData => {
+
         // For the rare chance a user was deleted but token was left over
         if (dbData.rows.length === 0) {
-          res.status(403);
-          res.redirect('/login');
+          res.sendStatus(403);
         }
-        
+
         // Set the request user to the user
         req.user = decoded.user;
         next();
@@ -51,9 +51,8 @@ module.exports = function requireToken(req, res, next) {
       // Errors
       .catch(err => {
         console.log(err);
-        res.status(403);
-        res.redirect('/login');
-      })
+        res.sendStatus(403);
+      });
     
   });
 }

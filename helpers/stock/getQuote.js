@@ -6,11 +6,11 @@ const axios = require('axios');
  */
 module.exports = async function getQuote(req, res, next) {
   // Stocks from Alpha Vantage
-  const url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=';
-
   const symbol = req.params.symbol || req.body.symbol;
+  
+  const url    = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=';
   const apiKey = process.env.AV_API;
-  const uri = url + symbol + '&apikey=' + apiKey;
+  const uri    = url + symbol + '&apikey=' + apiKey;
   
   try {
     const quoteData = await axios(uri);
@@ -18,11 +18,7 @@ module.exports = async function getQuote(req, res, next) {
     const { '05. price': price, '09. change': change } = quoteData.data['Global Quote'];
     
     // Modify the request body with a quote containing the symbol, price, and deltaPrice
-    req.quote = {
-      symbol,
-      price,
-      change
-    }
+    req.quote = { symbol, price, change }
 
     // Call the next function
     next();

@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs');
-const dbQuery = require('../queryPG');
+const db = require('../queryPG');
 
 /**
  * Middleware
@@ -14,7 +14,7 @@ module.exports = async function verifyUser(req, res, next) {
   }
   
   try {
-    const dbData = await dbQuery(query);
+    const dbData = await db(query);
     const hash = dbData.rows[0].pwhash
     console.log(password);
     const valid = await bcrypt.compare(password, hash);

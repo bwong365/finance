@@ -1,4 +1,4 @@
-const dbQuery = require('../queryPG');
+const db = require('../queryPG');
 
 /**
  * Registers users into the database
@@ -12,20 +12,15 @@ module.exports = function register(req, res) {
   }
 
   // Insert the users into the database
-  dbQuery(query)
+  db(query)
     .then(dbData => {
       console.log(dbData);
       // Return status code Created
-      res.status(201);
-      res.json({
-        details: dbData
-      });
-      //res.redirect('/login');
+      res.status(201).json({details: dbData});
     })
     // Handle errors
     .catch(err => {
       console.log(err)
-      res.status(400);
-      res.json(err.detail);
+      res.status(400).json({error: err.detail});
     });
 }

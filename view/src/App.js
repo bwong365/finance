@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+
 import './App.module.css';
+import FormContainer from './form/FormContainer';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
         <h1>Finance</h1>
+        <FormContainer />
       </div>
     );
   }

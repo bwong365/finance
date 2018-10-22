@@ -12,6 +12,7 @@ const sendQuote            = require('./helpers/stock/sendQuote');
 const validateShareRequest = require('./helpers/stock/validateShareRequest');
 
 // Validation helpers
+const confirmToken          = require('./helpers/validation/confirmToken');
 const hashpw                = require('./helpers/validation/hashpw');
 const register              = require('./helpers/validation/register');
 const signToken             = require('./helpers/validation/signToken');
@@ -20,9 +21,9 @@ const validateToken         = require('./helpers/validation/validateToken');
 
 module.exports = router;
 
-router.route('/').get((_, res) => {
-  res.json({message: 'Welcome to finance!'});
-})
+// Token verification
+router.route('/auth')
+  .post(validateToken, confirmToken);
 
 // Registration
 router.route('/register')
@@ -35,11 +36,16 @@ router.route('/login')
 // Protected Routes Below
 router.use(validateToken);
 
+// Home
+router.route('/').get((_, res) => {
+  res.json({message: 'Welcome to finance!'});
+})
+
 // Keep getQuote in individual chains, to read params
 
 // Get stock price
 router.route('/quote/:symbol')
-  .get(getQuote, sendQuote);
+.get(getQuote, sendQuote);
 
 // Buy stock
 router.route('/buy')

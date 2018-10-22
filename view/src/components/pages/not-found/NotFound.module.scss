@@ -1,0 +1,43 @@
+.container {
+  display: block;
+  max-width: 100vw;
+  max-height: 100vh;
+  overflow: hidden;
+  
+}
+
+.blocker {
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  z-index: 3;
+}
+
+.image {
+  display: block;
+  max-width: 100%;
+}
+
+.msg {
+  color: white;
+  font-size: 6vw;
+  font-weight: 500;
+  max-width: 50%;
+  position: absolute;
+  right: 8%;
+  text-align: right;
+  text-shadow: 0 0 8px rgba(0,0,0,.4);
+  top: 7%;
+  z-index: 1;
+
+  @media only screen and (min-width: 720px) {
+    font-size: 5vw;
+    top: 13%;
+    right: 10%;
+  }
+
+  @media only screen and (min-width: 1024px) {
+    top: 15%;
+    right: 15%;
+  }
+}

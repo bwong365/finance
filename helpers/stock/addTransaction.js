@@ -1,17 +1,17 @@
 const db = require('../queryPG');
 
 module.exports = async function addTransaction(req, res) {
-  const { user, newBalance, shares } = req;
+  const { username, newBalance, shares } = req;
   const { symbol, price } = req.quote
 
   const updateBalance = {
     text: 'UPDATE users SET balance = $1 WHERE username = $2',
-    values: [newBalance, user]
+    values: [newBalance, username]
   }
           
   const addTransaction = {
     text: 'INSERT INTO transactions (username, symbol, price, amount) VALUES ($1, $2, $3, $4)',
-    values: [user, symbol, price, shares]
+    values: [username, symbol, price, shares]
   }
 
   try {

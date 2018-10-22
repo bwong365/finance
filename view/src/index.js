@@ -1,16 +1,26 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
 import { Provider } from 'react-redux';
+
 import configureStore from './store';
-import './index.css';
-import App from './App';
+import App from './components/App';
 import * as serviceWorker from './serviceWorker';
+import './index.scss';
+
+import responsive from './components/hoc/responsive'
+import authenticator from './components/hoc/authenticator'
 
 const store = configureStore();
 
-ReactDOM.render(
+const AuthenticatedApp = authenticator(App);
+const ResponsiveApp = responsive(AuthenticatedApp);
+
+render(
   <Provider store={store}>
-    <App />
+  <div>
+    <ResponsiveApp />
+  </div>
+    
   </Provider>,
   document.getElementById('root')
 );

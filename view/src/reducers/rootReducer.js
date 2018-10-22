@@ -1,29 +1,10 @@
-//import { combineReducers } from 'redux';
-//import formReducer from './formReducer';
+import { combineReducers } from 'redux';
+import formData from './formData';
+import expanded from './expanded';
+import auth from './auth'
 
-const initialState = {
-  expanded: false
-}
-
-const rootReducer = (state = initialState, action) => {
-  switch(action.type) {
-    case 'INPUT_CHANGED': return ({
-      ...state,
-      formData: {
-        ...state.formData,
-        input: action.text
-      }
-    })
-    case 'DISPLAYTEXT': return ({
-      ...state,
-      formData: {
-        ...state.formData,
-        message: state.formData.input,
-        input: ''
-      }
-    })
-    default: return state;
-  }
-}
-
-export default rootReducer;
+export default combineReducers({
+  auth,
+  formData,
+  expanded
+});

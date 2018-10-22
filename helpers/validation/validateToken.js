@@ -14,8 +14,7 @@ module.exports = function requireToken(req, res, next) {
   // Abort if the token is of an invalid format or does not exist
   if (typeof value === 'undefined') {
     console.log('token missing');
-    res.sendStatus(403);  // You shall not pass
-    return;
+    return res.sendStatus(403);  // You shall not pass
   }
 
   // Extract token from format: Bearer <token>
@@ -25,14 +24,13 @@ module.exports = function requireToken(req, res, next) {
   jwt.verify(token, secret, (err, decoded) => {
     if (err) {
       console.log(err);
-      res.sendStatus(403);
-      return
+      return res.sendStatus(403);
     }
-    
+    console.log(decoded);
     // Find whether the decoded user exists in the database
     const query = {
       text: 'SELECT username FROM users WHERE username = $1',
-      values: [decoded.user]
+      values: [decoded.username]
     }
 
     dbQuery(query)
@@ -40,18 +38,19 @@ module.exports = function requireToken(req, res, next) {
 
         // For the rare chance a user was deleted but token was left over
         if (dbData.rows.length === 0) {
-          res.sendStatus(403);
+          console.log('no data');
+          return res.sendStatus(403);
         }
 
         // Set the request user to the user
-        req.user = decoded.user;
+        req.username = decoded.username;
         next();
       })
 
       // Errors
       .catch(err => {
         console.log(err);
-        res.sendStatus(403);
+        return res.sendStatus(403);
       });
     
   });

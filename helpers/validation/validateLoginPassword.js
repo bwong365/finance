@@ -6,17 +6,17 @@ const db = require('../queryPG');
  * Query db to see if password matches username
  */
 module.exports = async function verifyUser(req, res, next) {
-  
-  const { user, password } = req.body;
+  console.log(req.body);
+  const { username, password } = req.body;
   const query = {
     text: 'SELECT pwhash FROM users WHERE username = $1',
-    values: [user]
+    values: [username]
   }
   
   try {
     const dbData = await db(query);
+    console.log(dbData);
     const hash = dbData.rows[0].pwhash
-    console.log(password);
     const valid = await bcrypt.compare(password, hash);
     if (valid) {
       next();
@@ -26,6 +26,6 @@ module.exports = async function verifyUser(req, res, next) {
     
   } catch (e) {
     console.log(e);
-    res.json(e);
+    res.status(403).json(e);
   }
 }

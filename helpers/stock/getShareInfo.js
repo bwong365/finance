@@ -3,7 +3,7 @@ const db = require('../queryPG');
 module.exports = async function getShareInfo(req, res, next) {
   const query = {
     text: 'SELECT amount FROM transactions WHERE username = $1 AND symbol = $2',
-    values: [req.user, req.body.symbol]
+    values: [req.username, req.body.symbol]
   }
 
   try {

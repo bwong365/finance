@@ -1,0 +1,26 @@
+.block,
+.bar {
+  width: 96%;
+  height: 48px;
+  margin: 0 auto;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.block {
+  position: relative;
+  background-color: blue;
+  margin-bottom: 30px;
+
+}
+
+.bar {
+  position: fixed;
+  z-index: 100;
+  background-color: rgba(255, 255, 255, 0.774);
+  box-shadow: 4px 4px 8px -4px rgba(0,0,0,.56),
+              0 0 20px 4px rgba(0,0,0,.2);
+  border-radius: 4px;
+  
+}

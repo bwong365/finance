@@ -3,7 +3,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { shrinkApp, expandApp } from '../../actions/responsive.actions';
 
-const responsive = (Comp) => (
+const responsive = Comp => (
   class ResponsiveComponent extends Component {
     componentDidMount() {
       // Get window size for responsiveness

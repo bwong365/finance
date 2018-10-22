@@ -1,0 +1,38 @@
+.list {
+  display: block;
+  position: relative;
+  padding: 0;
+  top: 0;
+  margin: 0;
+  height: 100%;
+}
+
+.left {
+  float: left;
+  margin-left: 40px;
+}
+
+.right {
+  float: right;
+  margin-right: 40px;
+}
+
+.link {
+  height: 100%;
+  width: 100px;
+  display: inline-block;
+
+  a {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    cursor: default;
+    transition: .5s;
+
+    &:hover{
+      background-color: rgba(118, 158, 114, 0.351);
+    }
+  }
+}

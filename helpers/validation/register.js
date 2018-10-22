@@ -3,12 +3,12 @@ const db = require('../queryPG');
 /**
  * Registers users into the database
  */
-module.exports = function register(req, res) {
+module.exports = function register(req, res, next) {
   // Extract variables from req.body and build the query
-  const { username, name, hash } = req.body;
+  const { username, hash } = req.body;
   const query = {
-    text: 'INSERT INTO users (username, name, pwhash) VALUES ($1, $2, $3)',
-    values: [username, name, hash]
+    text: 'INSERT INTO users (username, pwhash) VALUES ($1, $2)',
+    values: [username, hash]
   }
 
   // Insert the users into the database
@@ -16,7 +16,8 @@ module.exports = function register(req, res) {
     .then(dbData => {
       console.log(dbData);
       // Return status code Created
-      res.status(201).json({details: dbData});
+      res.status(201);
+      next();
     })
     // Handle errors
     .catch(err => {

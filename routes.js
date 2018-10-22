@@ -27,7 +27,7 @@ router.route('/auth')
 
 // Registration
 router.route('/register')
-  .post(hashpw, register);
+  .post(hashpw, register, signToken);
 
 // Login
 router.route('/login')

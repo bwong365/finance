@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom'
-import { setUsername } from '../../../actions/auth.actions'
+import { setUsername, toLogin } from '../../../actions/auth.actions'
 
 class RegistrationForm extends Component {
   constructor(props) {
@@ -27,15 +27,17 @@ class RegistrationForm extends Component {
 
   submitForm = e => {
     e.preventDefault();
-    axios.post('/login', {
+    axios.post('/register', {
       username: this.state.username,
-      password: this.state.password
+      password: this.state.password,
+      confirm: this.state.confirm
     }).then(res => this.handleResponse(res))
       .catch(err => this.handleError(err));
   }
 
   handleResponse = res => {
-    if (res.request.status === 200) {
+    if (res.request.status === 201) {
+      this.props.toLogin(false);
       this.setState({
         username: '',
         password: '',
@@ -43,12 +45,11 @@ class RegistrationForm extends Component {
       });
       localStorage.setItem('token', res.data.token);
       this.props.setUsername(res.data.username);
-      
       this.props.history.push('/');
-
+      
     } else {
       this.setState({
-        message: 'Could not be logged in'
+        message: 'Could not register'
       })
     }
   }
@@ -56,7 +57,7 @@ class RegistrationForm extends Component {
   handleError = err => {
     console.log(err);
     this.setState({
-      message: 'Could not be logged in'
+      message: 'Could not register'
     })
   }
 
@@ -66,12 +67,20 @@ class RegistrationForm extends Component {
         <input
           type='text'
           name='username'
+          placeholder='username'
           value={this.state.username}
           onChange={this.handleChange}/>
         <input
           type='password'
           name='password'
+          placeholder='Password'
           value={this.state.password}
+          onChange={this.handleChange}/>
+        <input
+          type='password'
+          name='confirm'
+          placeholder='Confirm Password'
+          value={this.state.confirm}
           onChange={this.handleChange}/>
         <button onClick={this.submitForm}>Submit</button>
         <p>{this.state.message}</p>
@@ -82,5 +91,5 @@ class RegistrationForm extends Component {
 
 export default connect(
   null,
-  { setUsername }
+  { setUsername, toLogin }
 )(withRouter(RegistrationForm));

@@ -9,7 +9,9 @@ import Home          from './pages/Home'
 import Login         from './pages/login/LoginPage'
 import Register      from './pages/register/RegistrationPage'
 import NotFound      from './pages/not-found/NotFound'
+import Nav from './nav/Nav'
 
+import { flex, main } from './App.module.scss'
 
 import requireLogin  from '../components/hoc/requireLogin'
 const history = createBrowserHistory();
@@ -21,9 +23,9 @@ class App extends Component {
           { this.props.authenticating ? (
             <div>This is a loading screen</div>
           ) : (
-            <div>
-              {/*<Nav /> */}
-              <main>
+            <div className={flex}>
+              {this.props.username.length > 0 && <Nav />}
+              <div className={main}>
                 <Switch>
                   <Route exact path='/' component={requireLogin(Home)} />
                   {/*<Route path='/quote' component={requireLogin(Quote)} />}
@@ -33,7 +35,7 @@ class App extends Component {
                   <Route path='/login' component={Login} />
                   <Route path='*' component={NotFound} />
                 </Switch>
-              </main>
+              </div>
             </div>
           ) }
       </Router>
@@ -44,6 +46,7 @@ class App extends Component {
 export default connect(
   state => ({
     authenticating: state.auth.authenticating,
-    expanded: state.expanded
+    expanded: state.expanded,
+    username: state.auth.username
   })
 )(App);

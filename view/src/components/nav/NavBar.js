@@ -5,7 +5,7 @@ const x = false;
 
 const NavBar = props => (
   <nav>
-    {x && <div className={block}>here</div> }
+    {x && <div className={block}>here</div>}
     <div className={bar}>
       {props.children}
     </div>

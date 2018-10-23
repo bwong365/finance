@@ -6,8 +6,8 @@ const initialState = {
 
 const authReducer = (state = initialState, action) => (
   (action.type === 'AUTH')
-  ? Object.assign({}, state, action.payload)
-  : state
+    ? Object.assign({}, state, action.payload)
+    : state
 )
 
 export default authReducer;

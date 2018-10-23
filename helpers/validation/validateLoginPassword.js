@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs');
-const db = require('../queryPG');
+const db = require('../util/queryPG');
 
 /**
  * Middleware

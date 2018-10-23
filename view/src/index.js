@@ -17,10 +17,10 @@ const ResponsiveApp = responsive(AuthenticatedApp);
 
 render(
   <Provider store={store}>
-  <div>
-    <ResponsiveApp />
-  </div>
-    
+    <div>
+      <ResponsiveApp />
+    </div>
+
   </Provider>,
   document.getElementById('root')
 );

@@ -3,8 +3,8 @@ module.exports = function validateShareRequest(req, res, next) {
   const sharesOwned = req.shareInfo.sharesOwned
 
   if (shares > sharesOwned) {
-    return res.json({message: 'Not enough shares!'});
+    return res.json({ message: 'Not enough shares!' });
   }
-  
+
   next();
 }

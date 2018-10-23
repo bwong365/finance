@@ -17,7 +17,7 @@ const Buy = props => (
     <div className={flex}>
       <BuyForm />
     </div>
-</div>
+  </div>
 )
 
 export default Buy;

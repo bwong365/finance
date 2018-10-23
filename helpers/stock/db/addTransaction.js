@@ -1,4 +1,4 @@
-const db = require('../queryPG');
+const db = require('../../util/queryPG');
 
 module.exports = async function addTransaction(req, res) {
   const { username, newBalance, shares } = req;
@@ -8,7 +8,7 @@ module.exports = async function addTransaction(req, res) {
     text: 'UPDATE users SET balance = $1 WHERE username = $2',
     values: [newBalance, username]
   }
-          
+
   const addTransaction = {
     text: 'INSERT INTO transactions (username, symbol, price, amount) VALUES ($1, $2, $3, $4)',
     values: [username, symbol, price, shares]
@@ -21,7 +21,7 @@ module.exports = async function addTransaction(req, res) {
 
     // Await, but leave parallel
     const done = await updated && await inserted;
-    res.send({message: 'Success!'});
+    res.send({ message: 'Success!' });
   } catch (e) {
     if (e) {
       console.log(e);

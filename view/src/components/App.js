@@ -15,19 +15,19 @@ import Logout from './pages/logout/Logout'
 
 import { appClass, flex, main } from './App.module.scss'
 
-import requireLogin  from '../components/hoc/requireLogin'
+import requireLogin from '../components/hoc/requireLogin'
 const history = createBrowserHistory();
 
 // Apply HOCs outside render
 const protectedHome = requireLogin(Home);
 const protectedBuy = requireLogin(Buy);
 
-class App extends Component {  
+class App extends Component {
   render() {
     return (
       <Router history={history}>
-      <div className={appClass}>
-          { this.props.authenticating ? (
+        <div className={appClass}>
+          {this.props.authenticating ? (
             <div>This is a loading screen</div>
           ) : (
             <div className={flex}>
@@ -37,7 +37,7 @@ class App extends Component {
                   <Route exact path='/' component={protectedHome} />
                   <Route path='/buy' component={protectedBuy} />
                   {/*<Route path='/quote' component={requireLogin(Quote)} />}
-                  <Route path='/sell' component={requireLogin(Sell)} />*/}
+                <Route path='/sell' component={requireLogin(Sell)} />*/}
                   <Route path='/register' component={Register} />
                   <Route path='/login' component={Login} />
                   <Route path='/logout' component={Logout} />
@@ -45,7 +45,7 @@ class App extends Component {
                 </Switch>
               </div>
             </div>
-          ) }
+          )}
         </div>
       </Router>
     );

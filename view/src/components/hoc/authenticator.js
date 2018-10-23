@@ -9,7 +9,7 @@ import { toLogin, setUsername, isAuthenticating } from '../../actions/auth.actio
 const authenticator = Comp => (
   class AuthComponent extends Component {
     componentDidMount() {
-   
+
       // Check for authentication
       this.props.isAuthenticating(true);
       const token = localStorage.getItem('token');
@@ -20,12 +20,12 @@ const authenticator = Comp => (
         this.props.toLogin(true);
       }
     }
-    
+
     verifyUser = (token) => {
-      axios.post('/auth', {},{headers: {authorization: `Bearer ${token}`}})
+      axios.post('/auth', {}, { headers: { authorization: `Bearer ${token}` } })
         .then(res => {
           this.props.isAuthenticating(false);
-          if (res.request.status === 200) {;
+          if (res.request.status === 200) {
             console.log(res.data.username);
             this.props.setUsername(res.data.username);
           } else {

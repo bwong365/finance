@@ -21,7 +21,7 @@ class LoginPage extends Component {
           <LoginForm />
           <Link to='/register'>Register instead!</Link>
         </FormContainer>
-        
+
       </div>
     )
   }

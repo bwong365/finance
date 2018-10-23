@@ -4,14 +4,14 @@ export default {
   displayText
 }
 
-export function changeInput (text) {
-  return {type: 'CHANGE_INPUT', text};
+export function changeInput(text) {
+  return { type: 'CHANGE_INPUT', text };
 }
 
 export function clearForm() {
-  return {type: 'CLEAR_FORM'};
+  return { type: 'CLEAR_FORM' };
 }
 
 export function displayText() {
-  return {type: 'DISPLAY_TEXT'};
+  return { type: 'DISPLAY_TEXT' };
 }

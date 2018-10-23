@@ -19,13 +19,13 @@ export default class BuyForm extends Component {
 
   submitForm = async e => {
     e.preventDefault();
-    const {symbol, shares} = this.state;
+    const { symbol, shares } = this.state;
     const token = localStorage.getItem('token');
     try {
       await axios
         .post('/buy',
           { symbol, shares },
-          { headers: {authorization: `Bearer ${token}`} }
+          { headers: { authorization: `Bearer ${token}` } }
         );
 
       this.setState({
@@ -43,8 +43,8 @@ export default class BuyForm extends Component {
     const { symbol, shares } = this.state;
     return (
       <form className={form}>
-        <input className={text} type='text' name='symbol' value={symbol} onChange={this.handleChange} placeholder='Stock Symbol'/>
-        <input className={number} type='number' name='shares' value={shares} onChange={this.handleChange} min='1' placeholder='Shares'/>
+        <input className={text} type='text' name='symbol' value={symbol} onChange={this.handleChange} placeholder='Stock Symbol' />
+        <input className={number} type='number' name='shares' value={shares} onChange={this.handleChange} min='1' placeholder='Shares' />
         <button className={button} onClick={this.submitForm}>Buy!</button>
         <p>{this.state.message}</p>
       </form>

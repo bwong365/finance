@@ -6,9 +6,9 @@ export default {
 }
 
 export function shrinkApp() {
-  return {type: expanded, expanded: false }
+  return { type: expanded, expanded: false }
 }
 
 export function expandApp() {
-  return {type: expanded, expanded: true }
+  return { type: expanded, expanded: true }
 }

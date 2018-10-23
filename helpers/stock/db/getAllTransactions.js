@@ -1,4 +1,4 @@
-const db = require('../queryPG');
+const db = require('../../util/queryPG');
 
 module.exports = function getAllTransactions(req, res, next) {
   // get all transactions
@@ -18,4 +18,5 @@ module.exports = function getAllTransactions(req, res, next) {
       console.log(err);
       return res.json(err);
     });
+  
 }

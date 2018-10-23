@@ -1,4 +1,4 @@
-const db = require('../queryPG');
+const db = require('../../util/queryPG');
 
 module.exports = async function getShareInfo(req, res, next) {
   const query = {

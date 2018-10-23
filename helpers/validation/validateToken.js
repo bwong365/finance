@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const dbQuery = require('../queryPG');
+const dbQuery = require('../util/queryPG');
 
 /**
  * Middleware
@@ -52,6 +52,6 @@ module.exports = function requireToken(req, res, next) {
         console.log(err);
         return res.sendStatus(403);
       });
-    
+
   });
 }

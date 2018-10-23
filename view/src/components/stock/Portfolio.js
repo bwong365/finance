@@ -20,7 +20,7 @@ export default class Portfolio extends Component {
     const token = localStorage.getItem('token');
     try {
       console.log(1);
-      const data = await axios('/profile', { headers: {authorization: `Bearer ${token}`} })
+      const data = await axios('/profile', { headers: { authorization: `Bearer ${token}` } })
 
       const jsx = data.data.map(row => (
         <tr key={row.symbol}>
@@ -30,7 +30,7 @@ export default class Portfolio extends Component {
         </tr>
       ));
 
-      const total = data.data.reduce((acc, row) => (acc + (row.price * row.amount)),0 );
+      const total = data.data.reduce((acc, row) => (acc + (row.price * row.amount)), 0);
       console.log(2);
       this.setState({
         info: jsx,
@@ -71,7 +71,7 @@ export default class Portfolio extends Component {
           <p>Loading...</p>
         ) : (
           <div>
-          {loaded}
+            {loaded}
           </div>
         )}
       </div>

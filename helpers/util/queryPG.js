@@ -16,5 +16,5 @@ module.exports = async function queryPG(query) {
 
   // thanks, async (and Rob for teaching me async)
   await db.connect();
-  return db.query(query);  
+  return db.query(query);
 }

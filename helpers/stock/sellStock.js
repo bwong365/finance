@@ -1,4 +1,4 @@
-const monetize = require('../monetize');
+const monetize = require('../util/monetize');
 
 module.exports = function sellStock(req, _, next) {
   const { balance } = req;

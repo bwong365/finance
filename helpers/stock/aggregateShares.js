@@ -8,7 +8,7 @@ module.exports = async function aggregateShares(req, _, next) {
     if (symbol in allShares) {
       allShares[symbol].amount += row.amount;
     } else {
-      allShares[symbol] = {amount: row.amount};
+      allShares[symbol] = { amount: row.amount };
     }
   });
   req.allShares = allShares;

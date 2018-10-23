@@ -23,12 +23,12 @@ const responsive = Comp => (
     }
 
     render() {
-      return <Comp {...this.props}/>
+      return <Comp {...this.props} />
     }
   }
 )
 
 export default compose(connect(
-  state => ({expanded: state.expanded}),
+  state => ({ expanded: state.expanded }),
   { expandApp, shrinkApp }
 ), responsive);

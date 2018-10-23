@@ -14,7 +14,7 @@ module.exports = async function processShares(req, res) {
 
     const sharesArray = await Promise.all(promises);
     console.log(sharesArray);
-    return res.json(sharesArray);    
+    return res.json(sharesArray);
   } catch (e) {
     console.log(e);
     return res.sendStatus(500);
@@ -24,17 +24,17 @@ module.exports = async function processShares(req, res) {
 // Get prices for share symbol
 async function aV(symbol) {
   try {
-    const url    = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=';
+    const url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=';
     const apiKey = process.env.AV_API;
-    const uri    = url + symbol + '&apikey=' + apiKey;
+    const uri = url + symbol + '&apikey=' + apiKey;
 
     const quoteData = await axios(uri);
 
-    const { '05. price': price } = quoteData.data['Global Quote'];  
+    const { '05. price': price } = quoteData.data['Global Quote'];
 
-    return price;  
+    return price;
   } catch (e) {
     console.log(e);
   }
-  
+
 }

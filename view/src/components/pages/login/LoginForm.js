@@ -42,7 +42,7 @@ class LoginForm extends Component {
       });
       localStorage.setItem('token', res.data.token);
       this.props.setUsername(res.data.username);
-      
+
       this.props.history.push('/');
 
     } else {
@@ -62,8 +62,8 @@ class LoginForm extends Component {
   render() {
     return (
       <form>
-        <input type='text' name='username' value={this.state.username} onChange={this.handleChange}/>
-        <input type='password' name='password' value={this.state.password} onChange={this.handleChange}/>
+        <input type='text' name='username' value={this.state.username} onChange={this.handleChange} />
+        <input type='password' name='password' value={this.state.password} onChange={this.handleChange} />
         <button onClick={this.submitForm}>Submit</button>
         <p>{this.state.message}</p>
       </form>

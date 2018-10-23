@@ -4,7 +4,7 @@ const initialState = {
 }
 
 const formData = (state = initialState, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case 'CHANGE_INPUT': return ({
       ...state,
       input: action.text

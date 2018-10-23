@@ -1,4 +1,4 @@
-const db = require('../queryPG');
+const db = require('../util/queryPG.js');
 
 /**
  * Registers users into the database

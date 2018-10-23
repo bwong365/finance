@@ -1,14 +1,16 @@
-const protected = require('express').Router();
+const stock = require('express').Router();
 
 // Stock helpers
-const addTransaction       = require('./helpers/stock/addTransaction');
-const buyStock             = require('./helpers/stock/buyStock');
-const getBalance           = require('./helpers/stock/getBalance');
-const getShareInfo         = require('./helpers/stock/getShareInfo');
+const getAllSharePrices    = require('./helpers/stock/api/getAllSharePrices');
+const getQuote             = require('./helpers/stock/api/getQuote');
+
+const addTransaction       = require('./helpers/stock/db/addTransaction');
+const getAllTransactions   = require('./helpers/stock/db/getAllTransactions');
+const getBalance           = require('./helpers/stock/db/getBalance');
+const getShareInfo         = require('./helpers/stock/db/getShareInfo');
+
 const aggregateShares      = require('./helpers/stock/aggregateShares');
-const getAllSharePrices    = require('./helpers/stock/getAllSharePrices');
-const getAllTransactions   = require('./helpers/stock/getAllTransactions');
-const getQuote             = require('./helpers/stock/getQuote');
+const buyStock             = require('./helpers/stock/buyStock');
 const requireEnoughShares  = require('./helpers/stock/requireEnoughShares');
 const sellStock            = require('./helpers/stock/sellStock');
 const sendQuote            = require('./helpers/stock/sendQuote');
@@ -17,30 +19,31 @@ const validateShareRequest = require('./helpers/stock/validateShareRequest');
 // Validation helpers
 const validateToken = require('./helpers/validation/validateToken');
 
-module.exports = protected;
-
-protected.use(validateToken);
+// All routes are protected
+stock.use(validateToken);
 
 // Home
-protected.route('/').get((_, res) => {
-  res.json({message: 'Welcome to finance!'});
+stock.route('/').get((_, res) => {
+  res.json({ message: 'Welcome to finance!' });
 })
 
 // Keep getQuote in individual chains, to read params
 
-protected.route('/profile')
+stock.route('/profile')
   .get(getBalance, getAllTransactions, aggregateShares, getAllSharePrices)
 
 // Get stock price
-protected.route('/quote/:symbol')
+stock.route('/quote/:symbol')
   .get(getQuote, sendQuote);
 
 // Buy stock
-protected.route('/buy')
+stock.route('/buy')
   .post(validateShareRequest, getQuote, getBalance, buyStock, addTransaction);
 
 // Sell stock
-protected.route('/sell')
+stock.route('/sell')
   .post(validateShareRequest, getShareInfo, requireEnoughShares, getQuote, getBalance, sellStock, addTransaction);
 
 // change password
+
+module.exports = stock;

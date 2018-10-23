@@ -8,9 +8,6 @@ const signToken             = require('./helpers/validation/signToken');
 const validateLoginPassword = require('./helpers/validation/validateLoginPassword');
 const validateToken         = require('./helpers/validation/validateToken');
 
-
-module.exports = auth;
-
 // Token verification
 auth.route('/auth')
   .post(validateToken, confirmToken);
@@ -22,3 +19,5 @@ auth.route('/register')
 // Login
 auth.route('/login')
   .post(validateLoginPassword, signToken);
+
+module.exports = auth;

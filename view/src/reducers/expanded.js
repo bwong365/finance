@@ -1,7 +1,7 @@
-const expanded = (state = false, action) =>  (
+const expanded = (state = false, action) => (
   (action.type === 'EXPANDED')
-  ? action.expanded
-  : state
+    ? action.expanded
+    : state
 )
 
 export default expanded;

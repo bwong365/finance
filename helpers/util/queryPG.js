@@ -5,6 +5,7 @@ const { Pool } = require('pg');
  * @returns Promise containing the rows of data
  */
 module.exports = async function queryPG(query) {
+  
   const db = new Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: true,

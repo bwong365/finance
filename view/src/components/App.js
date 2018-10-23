@@ -26,15 +26,18 @@ const protectedBuy = requireLogin(Buy);
 const protectedSell = requireLogin(Sell)
 
 class App extends Component {
+  
   render() {
+    const { username, authenticating } = this.props;
+    console.log(username);
     return (
       <Router history={history}>
         <div className={appClass}>
-          {this.props.authenticating ? (
+          {authenticating ? (
             <Loader />
           ) : (
             <div className={flex}>
-              {this.props.username.length > 0 && <Nav />}
+              {username.length > 0 && <Nav />}
               <div className={main}>
                 <Switch>
                   <Route exact path='/' component={protectedHome} />

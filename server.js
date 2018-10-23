@@ -8,7 +8,7 @@ const auth      = require('./auth');
 const stock     = require('./stock');
 
 const app       = express();
-const port      = process.env.PORT;
+const port      = process.env.PORT || 5000;
 
 // Parse requests
 app.use(express.json());

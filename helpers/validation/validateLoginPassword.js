@@ -12,7 +12,7 @@ module.exports = async function verifyUser(req, res, next) {
     text: 'SELECT pwhash FROM users WHERE username = $1',
     values: [username]
   }
-  
+
   try {
     const dbData = await db(query);
     console.log(dbData);
@@ -23,7 +23,7 @@ module.exports = async function verifyUser(req, res, next) {
     } else {
       res.sendStatus(401);
     }
-    
+
   } catch (e) {
     console.log(e);
     res.status(403).json(e);

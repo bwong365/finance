@@ -4,6 +4,7 @@
 }
 
 .bannerContainer {
+  position: relative;
   min-height: 100px;
   max-height: 200px;
   overflow: hidden;
@@ -15,7 +16,10 @@
 }
 
 .banner {
+  position: relative;
   width: 100%;
+  bottom: -45%;
+  transform: translateY(-70%)
 }
 
 .flex {

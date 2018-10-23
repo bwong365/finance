@@ -1,9 +1,6 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
-import capitalize from '../../../helpers/capitalize';
 import { flex, banner, bannerContainer, heading } from './Sell.module.scss';
-import bannerImg from './banner3.jpg'
+import bannerImg from './banner1.jpg'
 import SellForm from './SellForm'
 
 

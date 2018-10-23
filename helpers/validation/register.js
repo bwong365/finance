@@ -22,6 +22,6 @@ module.exports = function register(req, res, next) {
     // Handle errors
     .catch(err => {
       console.log(err)
-      res.status(409).json({error: err.detail});
+      res.status(409).json({ error: err.detail });
     });
 }

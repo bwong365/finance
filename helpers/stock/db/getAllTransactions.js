@@ -18,5 +18,5 @@ module.exports = function getAllTransactions(req, res, next) {
       console.log(err);
       return res.json(err);
     });
-  
+
 }

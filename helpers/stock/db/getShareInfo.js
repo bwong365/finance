@@ -9,7 +9,7 @@ module.exports = async function getShareInfo(req, res, next) {
   try {
     const dbData = await db(query);
     const sharesOwned = dbData.rows.reduce((acc, row) => acc + row.amount, 0);
-    
+
     req.shareInfo = {
       sharesOwned,
       symbol: req.body.symbol
@@ -21,5 +21,5 @@ module.exports = async function getShareInfo(req, res, next) {
       res.sendStatus(500);
     }
   }
-  
+
 }

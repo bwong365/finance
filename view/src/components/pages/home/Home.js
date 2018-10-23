@@ -1,5 +1,4 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import capitalize from '../../../helpers/capitalize';
 import { portfolioContainer, banner, bannerContainer, heading } from './Home.module.scss';
@@ -23,8 +22,5 @@ const Home = (props) => {
 }
 
 export default connect(
-  state => ({
-    toLogin: state.auth.toLogin,
-    username: state.auth.username
-  })
+  state => ({ username: state.auth.username })
 )(Home);

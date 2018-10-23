@@ -11,6 +11,7 @@ const getShareInfo         = require('./helpers/stock/db/getShareInfo');
 
 const aggregateShares      = require('./helpers/stock/aggregateShares');
 const buyStock             = require('./helpers/stock/buyStock');
+const getShareAmounts      = require('./helpers/stock/getShareAmounts');
 const requireEnoughShares  = require('./helpers/stock/requireEnoughShares');
 const sellStock            = require('./helpers/stock/sellStock');
 const sendQuote            = require('./helpers/stock/sendQuote');
@@ -32,6 +33,10 @@ stock.route('/').get((_, res) => {
 // Get all stock
 stock.route('/portfolio')
   .get(getBalance, getAllTransactions, aggregateShares, getAllSharePrices)
+
+// Get stock amounts
+stock.route('/amounts')
+  .get(getAllTransactions, aggregateShares, getShareAmounts)
 
 // Get stock price
 stock.route('/quote/:symbol')

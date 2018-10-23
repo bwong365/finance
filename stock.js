@@ -23,11 +23,6 @@ const validateToken = require('./helpers/validation/validateToken');
 // All routes are protected
 stock.use(validateToken);
 
-// Home
-stock.route('/').get((_, res) => {
-  res.json({ message: 'Welcome to finance!' });
-})
-
 // Keep getQuote in individual chains, to read params
 
 // Get all stock

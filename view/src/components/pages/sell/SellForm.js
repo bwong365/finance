@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { form, text, button, number } from './BuyForm.module.scss';
+import { form, text, button, number } from './SellForm.module.scss';
 import axios from 'axios';
 
 export default class BuyForm extends Component {
@@ -8,6 +8,10 @@ export default class BuyForm extends Component {
     symbol: '',
     shares: '',
     message: ''
+  }
+
+  componentDidMount() {
+
   }
 
   handleChange = e => {
@@ -23,7 +27,7 @@ export default class BuyForm extends Component {
     const token = localStorage.getItem('token');
     try {
       await axios
-        .post('/buy',
+        .post('/sell',
           { symbol, shares },
           { headers: { authorization: `Bearer ${token}` } }
         );

@@ -10,8 +10,10 @@ import Login         from './pages/login/LoginPage'
 import Register      from './pages/register/RegistrationPage'
 import NotFound      from './pages/not-found/NotFound'
 import Nav from './nav/Nav'
-import Buy from './pages/buy/Buy';
 import Logout from './pages/logout/Logout'
+import Buy from './pages/buy/Buy';
+import Sell from './pages/sell/Sell';
+import Loader from './Loader';
 
 import { appClass, flex, main } from './App.module.scss'
 
@@ -21,6 +23,7 @@ const history = createBrowserHistory();
 // Apply HOCs outside render
 const protectedHome = requireLogin(Home);
 const protectedBuy = requireLogin(Buy);
+const protectedSell = requireLogin(Sell)
 
 class App extends Component {
   render() {
@@ -28,7 +31,7 @@ class App extends Component {
       <Router history={history}>
         <div className={appClass}>
           {this.props.authenticating ? (
-            <div>This is a loading screen</div>
+            <Loader />
           ) : (
             <div className={flex}>
               {this.props.username.length > 0 && <Nav />}
@@ -36,8 +39,7 @@ class App extends Component {
                 <Switch>
                   <Route exact path='/' component={protectedHome} />
                   <Route path='/buy' component={protectedBuy} />
-                  {/*<Route path='/quote' component={requireLogin(Quote)} />}
-                <Route path='/sell' component={requireLogin(Sell)} />*/}
+                  <Route path='/sell' component={protectedSell} />*/}
                   <Route path='/register' component={Register} />
                   <Route path='/login' component={Login} />
                   <Route path='/logout' component={Logout} />

@@ -29,20 +29,15 @@ stock.route('/').get((_, res) => {
 
 // Keep getQuote in individual chains, to read params
 
-stock.route('/profile')
+// Get all stock
+stock.route('/portfolio')
   .get(getBalance, getAllTransactions, aggregateShares, getAllSharePrices)
 
 // Get stock price
 stock.route('/quote/:symbol')
   .get(getQuote, sendQuote);
-
-// Buy stock
-stock.route('/buy')
-  .post(validateShareRequest, getQuote, getBalance, buyStock, addTransaction);
-
-// Sell stock
-stock.route('/sell')
-  .post(validateShareRequest, getShareInfo, requireEnoughShares, getQuote, getBalance, sellStock, addTransaction);
+stock.route('/buy').post(validateShareRequest, getQuote, getBalance, buyStock, addTransaction);
+stock.route('/sell').post(validateShareRequest, getShareInfo, requireEnoughShares, getQuote, getBalance, sellStock, addTransaction);
 
 // change password
 

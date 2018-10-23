@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import monetize from '../../helpers/monetize';
-import { table } from './Portfolio.module.scss'
+import { table } from './Portfolio.module.scss';
+import Loader from '../Loader';
 
 export default class Portfolio extends Component {
   constructor(props) {
@@ -12,15 +13,16 @@ export default class Portfolio extends Component {
       loading: true
     }
   }
+
   async componentDidMount() {
-    await this.getPortfolio();
+    const done = await this.getPortfolio();
+    console.log(done);
   }
 
   getPortfolio = async () => {
     const token = localStorage.getItem('token');
     try {
-      console.log(1);
-      const data = await axios('/profile', { headers: { authorization: `Bearer ${token}` } })
+      const data = await axios('/portfolio', { headers: { authorization: `Bearer ${token}` } })
 
       const jsx = data.data.map(row => (
         <tr key={row.symbol}>
@@ -31,7 +33,7 @@ export default class Portfolio extends Component {
       ));
 
       const total = data.data.reduce((acc, row) => (acc + (row.price * row.amount)), 0);
-      console.log(2);
+
       this.setState({
         info: jsx,
         total: monetize(total).toFixed(2),
@@ -66,11 +68,11 @@ export default class Portfolio extends Component {
 
     return (
       <div>
-        <h2>Your stock portfolio:</h2>
         {this.state.loading ? (
-          <p>Loading...</p>
+          <Loader />
         ) : (
           <div>
+            <h2>Your stock portfolio:</h2>
             {loaded}
           </div>
         )}

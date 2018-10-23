@@ -14,7 +14,8 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "heroku-postbuild": "cd view && npm install && npm run build"
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,5 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/bwong365/finance/issues"
-  },
-  "homepage": "https://finance-united.herokuapp.com"
+  }
 }

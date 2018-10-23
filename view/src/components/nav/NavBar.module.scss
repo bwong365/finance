@@ -1,6 +1,6 @@
 .block,
 .bar {
-  width: 96%;
+  width: 92%;
   height: 48px;
   margin: 0 auto;
   top: 8px;
@@ -18,9 +18,14 @@
 .bar {
   position: fixed;
   z-index: 100;
-  background-color: rgba(255, 255, 255, 0.774);
+  background-color: rgba(31, 31, 31, 0.84);
   box-shadow: 4px 4px 8px -4px rgba(0,0,0,.56),
               0 0 20px 4px rgba(0,0,0,.2);
   border-radius: 4px;
-  
+  min-width: 250px;
+  padding: 0 25px;
+
+  @media only screen and (max-width: 400px) {
+    padding: 0;
+  }
 }

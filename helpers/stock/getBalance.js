@@ -7,7 +7,7 @@ const db = require('../queryPG');
 module.exports = async function getBalance(req, res, next) {
   const query = {
     text: 'SELECT balance::NUMERIC FROM users WHERE username = $1',
-    values: [req.user]
+    values: [req.username]
   }
 
   try {

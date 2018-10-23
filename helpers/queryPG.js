@@ -2,7 +2,7 @@ const { Pool } = require('pg');
 
 /**
  * Use a pool of clients to query a postgresql db
- * @returns Promise
+ * @returns Promise containing the rows of data
  */
 module.exports = async function queryPG(query) {
   // Creates a dynamic pool of clients for postgres

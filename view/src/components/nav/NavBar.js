@@ -4,12 +4,12 @@ import { block, bar } from './NavBar.module.scss'
 const x = false;
 
 const NavBar = props => (
-  <div>
+  <nav>
     {x && <div className={block}>here</div> }
     <div className={bar}>
       {props.children}
     </div>
-  </div>
+  </nav>
 )
 
 export default NavBar;

@@ -1,0 +1,13 @@
+.table {
+  margin-top: -15px;
+  td,
+  th {
+    padding: 5px 15px;
+  }
+
+  td {
+    border: solid grey;
+    border-width: 1px 0;
+    border-collapse: collapse;
+  }
+}

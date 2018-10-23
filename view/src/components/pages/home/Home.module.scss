@@ -1,0 +1,30 @@
+.heading {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.bannerContainer {
+  min-height: 100px;
+  max-height: 200px;
+  overflow: hidden;
+  margin: 0 auto;
+  width: 100%;
+  @media only screen and (max-width: 1024px) {
+    height: 100px;
+  }
+}
+
+.portfolioContainer {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 400px;
+}
+
+.banner {
+  width: 100%;
+  position: relative;
+  left: 50%;
+  transform: translateY(-25%) translateX(-50%);
+  
+}

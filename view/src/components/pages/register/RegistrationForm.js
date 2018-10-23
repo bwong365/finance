@@ -64,24 +64,9 @@ class RegistrationForm extends Component {
   render() {
     return (
       <form>
-        <input
-          type='text'
-          name='username'
-          placeholder='username'
-          value={this.state.username}
-          onChange={this.handleChange}/>
-        <input
-          type='password'
-          name='password'
-          placeholder='Password'
-          value={this.state.password}
-          onChange={this.handleChange}/>
-        <input
-          type='password'
-          name='confirm'
-          placeholder='Confirm Password'
-          value={this.state.confirm}
-          onChange={this.handleChange}/>
+        <input type='text' name='username' placeholder='username' value={this.state.username} onChange={this.handleChange}/>
+        <input type='password' name='password' placeholder='Password' value={this.state.password} onChange={this.handleChange}/>
+        <input type='password' name='confirm' placeholder='Confirm Password' value={this.state.confirm} onChange={this.handleChange}/>
         <button onClick={this.submitForm}>Submit</button>
         <p>{this.state.message}</p>
       </form>

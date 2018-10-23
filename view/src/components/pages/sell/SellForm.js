@@ -88,7 +88,7 @@ export default class BuyForm extends Component {
     const options = (loading)
     ? null
     : (Object.keys(portfolio).map(symbol => (
-      <option key={symbol} value={symbol}>{symbol.toUpperCase()}</option>
+      <option key={symbol} value={symbol}>{symbol.toUpperCase()} (shares owned: {portfolio[symbol]})</option>
     )));
 
     const { symbol, shares } = this.state;

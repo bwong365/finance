@@ -7,7 +7,14 @@ module.exports = function register(req, res, next) {
   // Extract variables from req.body and build the query
   const { username, hash } = req.body;
   const query = {
-    text: 'INSERT INTO users (username, pwhash) VALUES ($1, $2)',
+    text: `CREATE TABLE IF NOT EXISTS users (
+            username text NOT NULL,
+            pwhash text NOT NULL,
+            balance money DEFAULT 10000.00,
+            CONSTRAINT users_pkey PRIMARY KEY (username)
+          ) ELSE INSERT INTO users (
+            username, pwhash
+          ) VALUES ($1, $2)`,
     values: [username, hash]
   }
 

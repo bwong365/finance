@@ -1,0 +1,13 @@
+.button {
+  border-radius: 4px;
+  margin-top: 10px;
+  padding: 5px 10px;
+  width: 5rem;
+  font-size: 1.1rem;
+  background-color: dodgerblue;
+  border: none;
+  color: white;
+  &:hover {
+    background-color: green;
+  }
+}

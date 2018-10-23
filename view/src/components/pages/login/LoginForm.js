@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom'
 import { setUsername } from '../../../actions/auth.actions'
+import Button from '../../form/Button'
+import TextInput from '../../form/TextInput'
 
 class LoginForm extends Component {
   constructor(props) {
@@ -62,9 +64,9 @@ class LoginForm extends Component {
   render() {
     return (
       <form>
-        <input type='text' name='username' value={this.state.username} onChange={this.handleChange} />
-        <input type='password' name='password' value={this.state.password} onChange={this.handleChange} />
-        <button onClick={this.submitForm}>Submit</button>
+        <TextInput type='text' name='username' value={this.state.username} onChange={this.handleChange} label='username'/>
+        <TextInput type='password' name='password' value={this.state.password} onChange={this.handleChange} label='password'/>
+        <Button onClick={this.submitForm} label='Submit' />
         <p>{this.state.message}</p>
       </form>
     );

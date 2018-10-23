@@ -4,6 +4,7 @@ import { form, text, button, number } from './SellForm.module.scss';
 import axios from 'axios';
 import monetize from '../../../helpers/monetize';
 import Loader from '../../Loader';
+import Button from '../../form/Button'
 
 export default class BuyForm extends Component {
   state = {
@@ -101,7 +102,7 @@ export default class BuyForm extends Component {
               {options}
             </select>
             <input className={number} type='number' name='shares' value={shares} onChange={this.handleChange} min='1' max={currentMax} placeholder='Shares' />
-            <button className={button} onClick={this.submitForm}>Sell!</button>
+            <Button className={button} onClick={this.submitForm} label='Sell!'/>
             <p>{message}</p>
           </form>)
     )

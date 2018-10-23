@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { form, text, button, number } from './BuyForm.module.scss';
 import axios from 'axios';
+import Button from '../../form/Button'
+import TextInput from '../../form/TextInput'
 
 export default class BuyForm extends Component {
   state = {
@@ -43,9 +45,9 @@ export default class BuyForm extends Component {
     const { symbol, shares } = this.state;
     return (
       <form className={form}>
-        <input className={text} type='text' name='symbol' value={symbol} onChange={this.handleChange} placeholder='Stock Symbol' />
-        <input className={number} type='number' name='shares' value={shares} onChange={this.handleChange} min='1' placeholder='Shares' />
-        <button className={button} onClick={this.submitForm}>Buy!</button>
+        <TextInput className={text} type='text' name='symbol' value={symbol} onChange={this.handleChange} placeholder='Stock Symbol' />
+        <TextInput className={number} type='number' name='shares' value={shares} onChange={this.handleChange} min='1' placeholder='Shares' />
+        <Button className={button} onClick={this.submitForm} label='Buy!' />
         <p>{this.state.message}</p>
       </form>
     )

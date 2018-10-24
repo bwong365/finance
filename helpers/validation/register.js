@@ -1,5 +1,3 @@
-const db = require('../util/queryPG.js');
-
 /**
  * Registers users into the database
  */
@@ -12,7 +10,7 @@ module.exports = function register(req, res, next) {
   }
 
   // Insert the users into the database
-  db(query)
+  db.query(query)
     .then(dbData => {
       console.log(dbData);
       // Return status code Created

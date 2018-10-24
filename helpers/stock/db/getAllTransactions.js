@@ -1,5 +1,3 @@
-const db = require('../../util/queryPG');
-
 module.exports = function getAllTransactions(req, res, next) {
   // get all transactions
   // deal with the rows
@@ -9,7 +7,7 @@ module.exports = function getAllTransactions(req, res, next) {
     values: [req.username]
   }
 
-  db(query)
+  db.query(query)
     .then(dbData => {
       req.transactions = dbData.rows;
       next();

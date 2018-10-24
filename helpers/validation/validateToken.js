@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-const dbQuery = require('../util/queryPG');
 
 /**
  * Middleware
@@ -33,7 +32,7 @@ module.exports = function requireToken(req, res, next) {
       values: [decoded.username]
     }
 
-    dbQuery(query)
+    db.query(query)
       .then(dbData => {
 
         // For the rare chance a user was deleted but token was left over

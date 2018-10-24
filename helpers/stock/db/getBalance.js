@@ -1,5 +1,3 @@
-const db = require('../../util/queryPG');
-
 /**
  * Middleware
  * Attach the user's cash-on-hand to the request as req.balance
@@ -11,7 +9,7 @@ module.exports = async function getBalance(req, res, next) {
   }
 
   try {
-    const dbData = await db(query);
+    const dbData = await db.query(query);
     req.balance = Number(dbData.rows[0].balance);
     next();
   } catch (e) {

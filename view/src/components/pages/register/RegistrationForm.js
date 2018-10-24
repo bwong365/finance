@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom'
 import { setUsername, toLogin } from '../../../actions/auth.actions'
 import TextInput from '../../form/TextInput';
 import Button from '../../form/Button'
+import Loader from '../../Loader'
 
 class RegistrationForm extends Component {
   constructor(props) {
@@ -13,7 +14,8 @@ class RegistrationForm extends Component {
       username: '',
       password: '',
       confirm: '',
-      message: ''
+      message: '',
+      loading: false
     }
   }
 
@@ -29,6 +31,9 @@ class RegistrationForm extends Component {
 
   submitForm = e => {
     e.preventDefault();
+    this.setState({
+      loading: true
+    })
     axios.post('/register', {
       username: this.state.username,
       password: this.state.password,
@@ -43,7 +48,8 @@ class RegistrationForm extends Component {
       this.setState({
         username: '',
         password: '',
-        message: 'Success!'
+        message: 'Success!',
+        loading: false
       });
       localStorage.setItem('token', res.data.token);
       this.props.setUsername(res.data.username);
@@ -51,7 +57,8 @@ class RegistrationForm extends Component {
 
     } else {
       this.setState({
-        message: 'Could not register'
+        message: 'Could not register',
+        loading: false
       })
     }
   }
@@ -59,7 +66,8 @@ class RegistrationForm extends Component {
   handleError = err => {
     console.log(err);
     this.setState({
-      message: 'Could not register'
+      message: 'Could not register',
+      loading: false
     })
   }
 
@@ -70,7 +78,7 @@ class RegistrationForm extends Component {
         <TextInput type='password' name='password' placeholder='Password' value={this.state.password} onChange={this.handleChange} />
         <TextInput type='password' name='confirm' placeholder='Confirm Password' value={this.state.confirm} onChange={this.handleChange} />
         <Button onClick={this.submitForm} label='Register' />
-        <p>{this.state.message}</p>
+        {this.state.loading ? <Loader /> : <p>{this.state.message}</p>}
       </form>
     );
   }

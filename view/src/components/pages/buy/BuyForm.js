@@ -4,12 +4,14 @@ import { form, text, button, number } from './BuyForm.module.scss';
 import axios from 'axios';
 import Button from '../../form/Button'
 import TextInput from '../../form/TextInput'
+import Loader from '../../Loader'
 
 export default class BuyForm extends Component {
   state = {
     symbol: '',
     shares: '',
-    message: ''
+    message: '',
+    loading: false
   }
 
   handleChange = e => {
@@ -21,6 +23,9 @@ export default class BuyForm extends Component {
 
   submitForm = async e => {
     e.preventDefault();
+    this.setState({
+      loading: true
+    })
     const { symbol, shares } = this.state;
     const token = localStorage.getItem('token');
     try {
@@ -31,12 +36,14 @@ export default class BuyForm extends Component {
         );
 
       this.setState({
-        message: 'Success!'
+        message: 'Success!',
+        loading: false
       })
     } catch (e) {
       console.log(e);
       this.setState({
-        message: 'Something went wrong...'
+        message: 'Something went wrong...',
+        loading: false
       })
     }
   }
@@ -47,8 +54,12 @@ export default class BuyForm extends Component {
       <form className={form}>
         <TextInput className={text} type='text' name='symbol' value={symbol} onChange={this.handleChange} placeholder='Stock Symbol' />
         <TextInput className={number} type='number' name='shares' value={shares} onChange={this.handleChange} min='1' placeholder='Shares' />
-        <Button className={button} onClick={this.submitForm} label='Buy!' />
-        <p>{this.state.message}</p>
+
+        {this.state.loading ? <Loader /> : (
+          <div>
+            <Button className={button} onClick={this.submitForm} label='Buy!' />
+            <p>{this.state.message}</p>
+          </div>)}
       </form>
     )
   }

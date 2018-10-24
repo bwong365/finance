@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom'
 import { setUsername } from '../../../actions/auth.actions'
 import Button from '../../form/Button'
 import TextInput from '../../form/TextInput'
+import Loader from '../../Loader'
 
 class LoginForm extends Component {
   constructor(props) {
@@ -12,7 +13,8 @@ class LoginForm extends Component {
     this.state = {
       username: '',
       password: '',
-      message: ''
+      message: '',
+      loading: false
     }
   }
 
@@ -28,6 +30,9 @@ class LoginForm extends Component {
 
   submitForm = e => {
     e.preventDefault();
+    this.setState({
+      loading: true
+    })
     axios.post('/login', {
       username: this.state.username,
       password: this.state.password
@@ -40,6 +45,7 @@ class LoginForm extends Component {
       this.setState({
         username: '',
         password: '',
+        loading: false,
         message: 'Success!'
       });
       localStorage.setItem('token', res.data.token);
@@ -49,7 +55,8 @@ class LoginForm extends Component {
 
     } else {
       this.setState({
-        message: 'Could not be logged in'
+        message: 'Could not be logged in',
+        loading: false
       })
     }
   }
@@ -57,6 +64,7 @@ class LoginForm extends Component {
   handleError = err => {
     console.log(err);
     this.setState({
+      loading: false,
       message: 'Could not be logged in'
     })
   }
@@ -67,7 +75,7 @@ class LoginForm extends Component {
         <TextInput type='text' name='username' value={this.state.username} onChange={this.handleChange} label='username'/>
         <TextInput type='password' name='password' value={this.state.password} onChange={this.handleChange} label='password'/>
         <Button onClick={this.submitForm} label='Submit' />
-        <p>{this.state.message}</p>
+        {this.state.loading ? <Loader /> : <p>{this.state.message}</p>}
       </form>
     );
   }

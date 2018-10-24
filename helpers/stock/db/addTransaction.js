@@ -1,5 +1,3 @@
-const db = require('../../util/queryPG');
-
 module.exports = async function addTransaction(req, res) {
   const { username, newBalance, shares } = req;
   const { symbol, price } = req.quote
@@ -16,8 +14,8 @@ module.exports = async function addTransaction(req, res) {
 
   try {
     // Call parallel queries
-    const updated = db(updateBalance);
-    const inserted = db(addTransaction);
+    const updated = db.query(updateBalance);
+    const inserted = db.query(addTransaction);
 
     // Await, but leave parallel
     const done = await updated && await inserted;

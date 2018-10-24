@@ -86,25 +86,25 @@ export default class BuyForm extends Component {
 
   render() {
     const { currentMax, portfolio, loading, message } = this.state
-    const options = (loading)
-    ? null
-    : (Object.keys(portfolio).map(symbol => (
+    
+    const options = (Object.keys(portfolio).map(symbol => (
       <option key={symbol} value={symbol}>{symbol.toUpperCase()} (shares owned: {portfolio[symbol]})</option>
     )));
 
     const { symbol, shares } = this.state;
     return (
-      (loading)
-        ? <Loader />
-        : (<form className={form}>
-            <select name='symbol' value={symbol} onChange={this.handleSelect}>
-              <option disabled value=''>Choose a stock</option>
-              {options}
-            </select>
-            <input className={number} type='number' name='shares' value={shares} onChange={this.handleChange} min='1' max={currentMax} placeholder='Shares' />
+      <form className={form}>
+        <select name='symbol' value={symbol} onChange={this.handleSelect}>
+          <option disabled value=''>Choose a stock</option>
+          {options}
+        </select>
+        <input className={number} type='number' name='shares' value={shares} onChange={this.handleChange} min='1' max={currentMax} placeholder='Shares' />
+        {(loading) ? <Loader /> : (
+          <div>
             <Button className={button} onClick={this.submitForm} label='Sell!'/>
             <p>{message}</p>
-          </form>)
+          </div>)}
+      </form>
     )
   }
 }

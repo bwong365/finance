@@ -37,6 +37,8 @@ export default class BuyForm extends Component {
 
       this.setState({
         message: 'Success!',
+        symbol: '',
+        shares: '',
         loading: false
       })
     } catch (e) {

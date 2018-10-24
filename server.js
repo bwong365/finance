@@ -26,11 +26,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, 'view/build')));
-app.get((_, res) => {
+app.route('*').get((_, res) => {
   res.sendFile(path.join(__dirname + 'view/build/index.html'));
 });
-
-
 
 // Routing
 app.use(auth);

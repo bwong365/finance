@@ -5,6 +5,7 @@ import axios from 'axios';
 import monetize from '../../../helpers/monetize';
 import Loader from '../../Loader';
 import Button from '../../form/Button'
+import Message from '../../form/Message'
 
 export default class BuyForm extends Component {
   state = {
@@ -102,7 +103,7 @@ export default class BuyForm extends Component {
         {(loading) ? <Loader /> : (
           <div>
             <Button className={button} onClick={this.submitForm} label='Sell!'/>
-            <p>{message}</p>
+            <Message text={message} />
           </div>)}
       </form>
     )

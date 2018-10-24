@@ -19,7 +19,6 @@ class LoginPage extends Component {
       <div>
         <FormContainer heading='Welcome to the $tock €xchange'>
           <LoginForm />
-          <Link to='/register'>Register instead!</Link>
         </FormContainer>
 
       </div>

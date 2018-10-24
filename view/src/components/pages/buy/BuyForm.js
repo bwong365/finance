@@ -4,6 +4,7 @@ import { form, text, button, number } from './BuyForm.module.scss';
 import axios from 'axios';
 import Button from '../../form/Button'
 import TextInput from '../../form/TextInput'
+import Message from '../../form/Message'
 import Loader from '../../Loader'
 
 export default class BuyForm extends Component {
@@ -51,16 +52,16 @@ export default class BuyForm extends Component {
   }
 
   render() {
-    const { symbol, shares } = this.state;
+    const { symbol, shares, message } = this.state;
     return (
       <form className={form}>
-        <TextInput className={text} type='text' name='symbol' value={symbol} onChange={this.handleChange} placeholder='Stock Symbol' />
-        <TextInput className={number} type='number' name='shares' value={shares} onChange={this.handleChange} min='1' placeholder='Shares' />
+        <input className={text} type='text' name='symbol' value={symbol} onChange={this.handleChange} placeholder='Stock Symbol' />
+        <input className={number} type='number' name='shares' value={shares} onChange={this.handleChange} min='1' placeholder='Shares' />
 
         {this.state.loading ? <Loader /> : (
           <div>
             <Button className={button} onClick={this.submitForm} label='Buy!' />
-            <p>{this.state.message}</p>
+            <Message text={message}/>
           </div>)}
       </form>
     )

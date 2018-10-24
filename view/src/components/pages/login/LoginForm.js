@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import { setUsername } from '../../../actions/auth.actions'
 import Button from '../../form/Button'
 import TextInput from '../../form/TextInput'
+import Message from '../../form/Message'
 import Loader from '../../Loader'
 
 class LoginForm extends Component {
@@ -75,7 +76,14 @@ class LoginForm extends Component {
         <TextInput type='text' name='username' value={this.state.username} onChange={this.handleChange} label='username'/>
         <TextInput type='password' name='password' value={this.state.password} onChange={this.handleChange} label='password'/>
         <Button onClick={this.submitForm} label='Submit' />
-        {this.state.loading ? <Loader /> : <p>{this.state.message}</p>}
+        {this.state.loading
+          ? <Loader /> 
+          : (<div>
+               <Message text={this.state.message}/>
+               <span>Don't have an account? <Link to='/register'>Register here!</Link></span>
+              </div>
+        )}
+
       </form>
     );
   }

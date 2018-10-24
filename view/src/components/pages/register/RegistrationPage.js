@@ -13,7 +13,7 @@ class RegistrationPage extends Component {
     return (
       <FormContainer heading='Register Here'>
         <RegistrationForm />
-        <Link to='/login'>Login here</Link>
+        <span>Would you like to <Link to='/login'>Login</Link> instead?</span>
       </FormContainer>
     )
   }

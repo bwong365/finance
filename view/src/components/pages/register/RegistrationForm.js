@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { withRouter } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import { setUsername, toLogin } from '../../../actions/auth.actions'
 import TextInput from '../../form/TextInput';
+import Message from '../../form/Message';
 import Button from '../../form/Button'
 import Loader from '../../Loader'
 
@@ -72,13 +73,19 @@ class RegistrationForm extends Component {
   }
 
   render() {
+    const { username, password, message, confirm, loading } = this.state;
     return (
       <form>
-        <TextInput type='text' name='username' placeholder='username' value={this.state.username} onChange={this.handleChange} />
-        <TextInput type='password' name='password' placeholder='Password' value={this.state.password} onChange={this.handleChange} />
-        <TextInput type='password' name='confirm' placeholder='Confirm Password' value={this.state.confirm} onChange={this.handleChange} />
+        <TextInput type='text' name='username' label='username' value={username} onChange={this.handleChange} />
+        <TextInput type='password' name='password' label='Password' value={password} onChange={this.handleChange} />
+        <TextInput type='password' name='confirm' label='Confirm Password' value={confirm} onChange={this.handleChange} />
         <Button onClick={this.submitForm} label='Register' />
-        {this.state.loading ? <Loader /> : <p>{this.state.message}</p>}
+        {loading 
+          ? <Loader /> 
+          : (<div>
+              <Message text={message}/>
+              <span>Would you like to <Link to='/login'>Login</Link> instead?</span>
+            </div>)}
       </form>
     );
   }

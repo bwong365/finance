@@ -4,7 +4,7 @@
   padding: 8px;
   margin-top: 10px;
   font-size: 1.1rem;
-  background-color: rgba(49, 255, 30, 0.397);
+  background-color: rgb(24, 24, 24);
   border: none;
   color: white;
 
@@ -13,4 +13,6 @@
 
 .input::placeholder {
   color: white;
+  opacity: .75;
+  font-style: italic;
 }

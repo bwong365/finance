@@ -24,7 +24,7 @@ const heroku = {
   ssl: true,
 }
 
-global.db = global.db ? global.db : new Pool(dev);
+global.db = global.db ? global.db : new Pool(process.env.PGHOST ? dev : heroku);
 
 // Parse requests
 app.use(express.json());

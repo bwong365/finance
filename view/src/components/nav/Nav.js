@@ -23,6 +23,7 @@ const Nav = props => {
           <Link to='/sell'>Sell</Link>
         </li>
       </ul>
+      
       <ul className={`${list} ${right}`}>
         <li className={`${link} ${varSize}`}>
           <Link to='/logout'>Log out</Link>

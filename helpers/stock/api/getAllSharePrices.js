@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 module.exports = async function processShares(req, res) {
-  const { allShares } = req;
+  const { allShares, balance } = req;
 
   try {
     const promises = Object.keys(allShares)
@@ -12,9 +12,9 @@ module.exports = async function processShares(req, res) {
         return ({ symbol, price, amount })
       });
 
-    const sharesArray = await Promise.all(promises);
-    console.log(sharesArray);
-    return res.json(sharesArray);
+    const shares = await Promise.all(promises);
+    console.log(shares);
+    return res.json({balance, shares});
   } catch (e) {
     console.log(e);
     return res.sendStatus(500);

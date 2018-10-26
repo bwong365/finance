@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import monetize from '../../helpers/monetize';
-import { table } from './Portfolio.module.scss';
+import { table, subHeading } from './Portfolio.module.scss';
 import Loader from '../Loader';
 
 export default class Portfolio extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      info: null,
+      shareTable: null,
       total: '',
-      loading: true
+      loading: true,
+      balance: ''
     }
   }
 
@@ -24,7 +25,7 @@ export default class Portfolio extends Component {
     try {
       const data = await axios('/portfolio', { headers: { authorization: `Bearer ${token}` } })
 
-      const jsx = data.data.map(row => (
+      const shareTable = data.data.shares.map(row => (
         <tr key={row.symbol}>
           <td>{row.symbol.toUpperCase()}</td>
           <td>{monetize(row.price).toFixed(2)}</td>
@@ -32,10 +33,12 @@ export default class Portfolio extends Component {
         </tr>
       ));
 
-      const total = data.data.reduce((acc, row) => (acc + (row.price * row.amount)), 0);
+      const total = data.data.shares.reduce((acc, row) => (acc + (row.price * row.amount)), 0);
+      const balance = data.data.balance;
 
       this.setState({
-        info: jsx,
+        balance,
+        shareTable,
         total: monetize(total).toFixed(2),
         loading: false
       })
@@ -48,15 +51,17 @@ export default class Portfolio extends Component {
   }
 
   render() {
-    const loaded = this.state.info ? (
+    const { shareTable, total, balance, loading } = this.state;
+    const loaded = shareTable ? (
       <div>
-        <h3>Total: {this.state.total}</h3>
+        <h3 className={subHeading}>Total Share Worth: ${total}</h3>
+        <h3 className={subHeading}>Cash On Hand: ${balance}</h3>
         <table className={table}>
           <thead>
             <tr><th>Stock</th><th>Price</th><th>Amount</th></tr>
           </thead>
           <tbody>
-            {this.state.info}
+            {shareTable}
           </tbody>
         </table>
       </div>
@@ -68,7 +73,7 @@ export default class Portfolio extends Component {
 
     return (
       <div>
-        {this.state.loading ? (
+        {loading ? (
           <Loader />
         ) : (
           <div>

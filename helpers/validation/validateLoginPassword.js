@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs');
+const capitalize = require('../util/capitalize')
 
 /**
  * Middleware
@@ -9,7 +10,7 @@ module.exports = async function verifyUser(req, res, next) {
   const { username, password } = req.body;
   const query = {
     text: 'SELECT pwhash FROM users WHERE username = $1',
-    values: [username]
+    values: [capitalize(username)]
   }
 
   try {

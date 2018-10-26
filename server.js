@@ -11,15 +11,20 @@ const stock     = require('./stock');
 const app       = express();
 const port      = process.env.PORT || 5000;
 
-global.db = global.db ? global.db : new Pool({
-  //user: process.env.PGUSER,
-  //host: process.env.PGHOST,
-  //database: process.env.PGDATABASE,
-  //password: process.env.PGPASS,
-  //port: process.env.PGPORT,
+const dev = {
+  user: process.env.PGUSER,
+  host: process.env.PGHOST,
+  database: process.env.PGDATABASE,
+  password: process.env.PGPASS,
+  port: process.env.PGPORT,
+}
+
+const heroku = {
   connectionString: process.env.DATABASE_URL,
   ssl: true,
-});
+}
+
+global.db = global.db ? global.db : new Pool(dev);
 
 // Parse requests
 app.use(express.json());

@@ -24,6 +24,7 @@ export default class BuyForm extends Component {
 
   submitForm = async e => {
     e.preventDefault();
+    if (this.state.symbol === '' || this.state.shares === '') return;
     this.setState({
       loading: true
     })
@@ -61,7 +62,7 @@ export default class BuyForm extends Component {
         {this.state.loading ? <Loader /> : (
           <div>
             <Button className={button} onClick={this.submitForm} label='Buy!' />
-            <Message text={message}/>
+            <p>{message}</p>
           </div>)}
       </form>
     )

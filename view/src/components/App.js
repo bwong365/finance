@@ -14,8 +14,9 @@ import Logout from './pages/logout/Logout'
 import Buy from './pages/buy/Buy';
 import Sell from './pages/sell/Sell';
 import Loader from './Loader';
+import Lookup from './pages/lookup/Lookup';
 
-import { appClass, flex, main } from './App.module.scss'
+import { spacer, appClass, flex, main } from './App.module.scss'
 
 import requireLogin from '../components/hoc/requireLogin'
 const history = createBrowserHistory();
@@ -34,7 +35,9 @@ class App extends Component {
       <Router history={history}>
         <div className={appClass}>
           {authenticating ? (
-            <Loader />
+            <div className={spacer}>
+              <Loader />
+            </div>
           ) : (
             <div className={flex}>
               {username.length > 0 && <Nav />}

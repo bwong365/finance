@@ -1,3 +1,5 @@
+const capitalize = require('../util/capitalize');
+
 /**
  * Registers users into the database
  */
@@ -6,7 +8,7 @@ module.exports = function register(req, res, next) {
   const { username, hash } = req.body;
   const query = {
     text: 'INSERT INTO users (username, pwhash) VALUES ($1, $2)',
-    values: [username, hash]
+    values: [capitalize(username), hash]
   }
 
   // Insert the users into the database

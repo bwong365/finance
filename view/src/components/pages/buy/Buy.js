@@ -6,6 +6,7 @@ import { flex, banner, bannerContainer, heading } from './Buy.module.scss';
 import bannerImg from './banner3.jpg'
 import Portfolio from '../../stock/Portfolio';
 import BuyForm from './BuyForm'
+import GetQuotes from '../../stock/GetQuotes';
 
 
 const Buy = props => (
@@ -15,6 +16,7 @@ const Buy = props => (
     </div>
     <h1 className={heading}>Buy stocks!</h1>
     <div className={flex}>
+      <GetQuotes />
       <BuyForm />
     </div>
   </div>

@@ -77,8 +77,8 @@ class RegistrationForm extends Component {
     return (
       <form>
         <TextInput type='text' name='username' label='username' value={username} onChange={this.handleChange} />
-        <TextInput type='password' name='password' label='Password' value={password} onChange={this.handleChange} />
-        <TextInput type='password' name='confirm' label='Confirm Password' value={confirm} onChange={this.handleChange} />
+        <TextInput type='password' name='password' label='password' value={password} onChange={this.handleChange} />
+        <TextInput type='password' name='confirm' label='confirm password' value={confirm} onChange={this.handleChange} />
         <Button onClick={this.submitForm} label='Register' />
         {loading 
           ? <Loader /> 

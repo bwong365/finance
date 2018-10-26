@@ -46,13 +46,7 @@ export default class BuyForm extends Component {
   handleChange = e => {
     if (this.state.symbol === '') return;
     const field = e.target.name;
-    this.setState({
-      [field]: e.target.value,
-    }, () => {
-      this.setState({
-        message: this.state.symbol + ' ' + this.state.shares
-      })
-    })
+    this.setState({ [field]: e.target.value })
   }
 
   handleSelect = e => {
@@ -65,6 +59,9 @@ export default class BuyForm extends Component {
   submitForm = async e => {
     e.preventDefault();
     if (this.state.symbol === '' || this.state.shares === '') return;
+    this.setState({
+      loading: true
+    })
     const { symbol, shares } = this.state;
     const token = localStorage.getItem('token');
     try {
@@ -73,14 +70,18 @@ export default class BuyForm extends Component {
           { symbol, shares },
           { headers: { authorization: `Bearer ${token}` } }
         );
-
+      await this.getPortfolio();
       this.setState({
-        message: 'Success!'
+        message: 'Success!',
+        shares: '',
+        symbol: '',
+        loading: false
       })
     } catch (e) {
       console.log(e);
       this.setState({
-        message: 'Something went wrong...'
+        message: 'Something went wrong...',
+        loading: false
       })
     }
   }
@@ -103,7 +104,7 @@ export default class BuyForm extends Component {
         {(loading) ? <Loader /> : (
           <div>
             <Button className={button} onClick={this.submitForm} label='Sell!'/>
-            <Message text={message} />
+            <p>{message}</p>
           </div>)}
       </form>
     )

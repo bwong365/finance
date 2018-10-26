@@ -1,93 +1,100 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { form, text, button, number } from './SellForm.module.scss';
-import axios from 'axios';
-import monetize from '../../../helpers/monetize';
+import axios                from 'axios';
+
+import Button from '../../form/Button';
 import Loader from '../../Loader';
-import Button from '../../form/Button'
-import Message from '../../form/Message'
+
+import { form, button, number } from './SellForm.module.scss';
 
 export default class BuyForm extends Component {
   state = {
-    symbol: '',
-    shares: '',
+    currentMax: 1,
+    loading: true,
     message: '',
     portfolio: '',
-    loading: true,
-    currentMax: 1
-  }
+    shares: '',
+    symbol: '',
+  };
 
   componentDidMount() {
     this.getPortfolio();
   }
 
   getPortfolio = async () => {
+    // Get token from storage
     const token = localStorage.getItem('token');
+
     try {
+      // Call server for portfolio information
       const portfolioData = await axios('/amounts', { headers: { authorization: `Bearer ${token}` } })
-      console.log(portfolioData);
+      
+      // Format portfolio info
       const portfolio = {};
       portfolioData.data.forEach(stock => {
         portfolio[stock.symbol] = stock.amount;
-      })
+      });
+
+      // Display portfolio
       this.setState({
         portfolio,
-        loading: false
-      })
-      console.log(this.state);
+        loading: false,
+      });
+
     } catch (e) {
-      console.log(e);
       this.setState({
         loading: false
-      })
+      });
     }
   }
 
   handleChange = e => {
     if (this.state.symbol === '') return;
     const field = e.target.name;
-    this.setState({ [field]: e.target.value })
+    this.setState({ [field]: e.target.value });
   }
 
   handleSelect = e => {
     this.setState({
+      currentMax: this.state.portfolio[e.target.value],
       symbol: e.target.value,
-      currentMax: this.state.portfolio[e.target.value]
-    })
+    });
   }
 
   submitForm = async e => {
     e.preventDefault();
     if (this.state.symbol === '' || this.state.shares === '') return;
+    
     this.setState({
       loading: true
-    })
+    });
+    
     const { symbol, shares } = this.state;
     const token = localStorage.getItem('token');
+    
     try {
-      await axios
-        .post('/sell',
+      await axios.post('/sell',
           { symbol, shares },
           { headers: { authorization: `Bearer ${token}` } }
         );
       await this.getPortfolio();
+      
       this.setState({
+        loading: false,
         message: 'Success!',
         shares: '',
         symbol: '',
-        loading: false
-      })
+      });
+
     } catch (e) {
-      console.log(e);
       this.setState({
+        loading: false,
         message: 'Something went wrong...',
-        loading: false
-      })
+      });
     }
   }
 
   render() {
-    const { currentMax, portfolio, loading, message } = this.state
+    const { currentMax, portfolio, loading, message } = this.state;
     
     const options = (Object.keys(portfolio).map(symbol => (
       <option key={symbol} value={symbol}>{symbol.toUpperCase()} (shares owned: {portfolio[symbol]})</option>
@@ -107,6 +114,6 @@ export default class BuyForm extends Component {
             <p>{message}</p>
           </div>)}
       </form>
-    )
+    );
   }
 }

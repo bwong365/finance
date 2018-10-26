@@ -1,21 +1,13 @@
-import React, { Component } from 'react'
-import RegistrationForm from './RegistrationForm'
-import FormContainer from '../../form/FormContainer'
-import { Link } from 'react-router-dom';
+import React from 'react';
 
+import FormContainer    from '../../form/FormContainer';
+import RegistrationForm from './RegistrationForm';
 
-class RegistrationPage extends Component {
-  componentDidMount() {
-    localStorage.clear();
-  }
+// Contains registration form
+const RegistrationPage = props => (
+  <FormContainer heading='Register Here'>
+    <RegistrationForm />
+  </FormContainer>
+);
 
-  render() {
-    return (
-      <FormContainer heading='Register Here'>
-        <RegistrationForm />
-      </FormContainer>
-    )
-  }
-}
-
-export default RegistrationPage
+export default RegistrationPage;

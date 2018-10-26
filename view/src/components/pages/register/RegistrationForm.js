@@ -1,25 +1,24 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import axios from 'axios';
-import { Link, withRouter } from 'react-router-dom'
-import { setUsername, toLogin } from '../../../actions/auth.actions'
+import React, { Component }     from 'react';
+import { connect }              from 'react-redux';
+import { Link, withRouter }     from 'react-router-dom';
+import axios                    from 'axios';
+import { setUsername, toLogin } from '../../../actions/authActions';
+
+import Button    from '../../form/Button';
+import Loader    from '../../Loader';
+import Message   from '../../form/Message';
 import TextInput from '../../form/TextInput';
-import Message from '../../form/Message';
-import Button from '../../form/Button'
-import Loader from '../../Loader'
 
 class RegistrationForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      username: '',
-      password: '',
-      confirm: '',
-      message: '',
-      loading: false
-    }
-  }
+  state = {
+    confirm: '',
+    loading: false,
+    message: '',
+    password: '',
+    username: '',
+  };
 
+  // Clear tokens on mount
   componentDidMount() {
     localStorage.clear();
   }
@@ -32,9 +31,12 @@ class RegistrationForm extends Component {
 
   submitForm = e => {
     e.preventDefault();
+    // Start loading animation
     this.setState({
       loading: true
     })
+
+    // Call server to register new user
     axios.post('/register', {
       username: this.state.username,
       password: this.state.password,
@@ -44,36 +46,40 @@ class RegistrationForm extends Component {
   }
 
   handleResponse = res => {
+    // If successful, set username and token
     if (res.request.status === 201) {
       this.props.toLogin(false);
       this.setState({
-        username: '',
-        password: '',
+        loading: false,
         message: 'Success!',
-        loading: false
+        password: '',
+        username: '',
       });
       localStorage.setItem('token', res.data.token);
       this.props.setUsername(res.data.username);
+      
+      // Redirect to home
       this.props.history.push('/');
 
     } else {
       this.setState({
+        loading: false,
         message: 'Could not register',
-        loading: false
-      })
+      });
     }
   }
 
   handleError = err => {
     console.log(err);
     this.setState({
+      loading: false,
       message: 'Could not register',
-      loading: false
-    })
+    });
   }
 
   render() {
     const { username, password, message, confirm, loading } = this.state;
+    
     return (
       <form>
         <TextInput type='text' name='username' label='username' value={username} onChange={this.handleChange} />
@@ -91,6 +97,7 @@ class RegistrationForm extends Component {
   }
 }
 
+// Map dispatch to props
 export default connect(
   null,
   { setUsername, toLogin }

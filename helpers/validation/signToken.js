@@ -1,5 +1,5 @@
-const jwt = require('jsonwebtoken');
 const capitalize = require('../util/capitalize');
+const jwt        = require('jsonwebtoken');
 
 /**
  * Sign a token, assume the user has already
@@ -13,8 +13,7 @@ module.exports = function login(req, res) {
   jwt.sign({ username: capitalize(username) }, secret, { expiresIn: '7d' }, (err, token) => {
     if (err) {
       console.log(err);
-      res.json(err);
-      return;
+      return res.json(err);
     } else {
       res.json({ token, username: capitalize(username) });
     }

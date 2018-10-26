@@ -1,11 +1,12 @@
+/**
+ * Get a record of user's transaction history from the database
+ * attack record to the request as req.transactions
+ */
 module.exports = function getAllTransactions(req, res, next) {
-  // get all transactions
-  // deal with the rows
-
-  const query = {
+    const query = {
     text: 'SELECT * FROM transactions WHERE username = $1',
     values: [req.username]
-  }
+  };
 
   db.query(query)
     .then(dbData => {
@@ -16,5 +17,4 @@ module.exports = function getAllTransactions(req, res, next) {
       console.log(err);
       return res.json(err);
     });
-
 }

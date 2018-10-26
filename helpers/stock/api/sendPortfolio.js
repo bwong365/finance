@@ -1,19 +1,28 @@
 const axios = require('axios');
 
+/**
+ * @param list of stock from aggregateShares and balance
+ * calls AlphaVantage for a current price of each stock.
+ * @returns stock list and balance to the client
+ */
 module.exports = async function processShares(req, res) {
   const { allShares, balance } = req;
 
   try {
     const promises = Object.keys(allShares)
+      // Remove non-positive share amounts from the printed portfolio
       .filter(symbol => allShares[symbol].amount > 0)
+      // Get prices from AlphaVantage
       .map(async symbol => {
         const amount = allShares[symbol].amount;
         const price = await aV(symbol);
-        return ({ symbol, price, amount })
+        return ({ symbol, price, amount });
       });
-
+    
+    // Await the calls above in parallel
     const shares = await Promise.all(promises);
-    console.log(shares);
+    
+    // Send portfolio to client
     return res.json({balance, shares});
   } catch (e) {
     console.log(e);

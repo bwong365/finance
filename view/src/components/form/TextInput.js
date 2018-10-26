@@ -1,9 +1,22 @@
-import React from 'react'
+import React from 'react';
 
-import { input } from './TextInput.module.scss'
+import { input } from './TextInput.module.scss';
 
-const TextInput = ({ name, value, type, onChange, label }) => (
-  <input className={input} name={name} value={value} type={type} onChange={onChange} placeholder={label} />
-)
+// Form text input component
+const TextInput = ({
+  label,
+  name,
+  onChange,
+  type,
+  value,
+}) => (
+  <input 
+    className={input}
+    name={name}
+    onChange={onChange}
+    placeholder={label}
+    type={type}
+    value={value} />
+);
 
 export default TextInput;

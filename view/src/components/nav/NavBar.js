@@ -1,15 +1,12 @@
 import React from 'react';
-import { block, bar } from './NavBar.module.scss'
 
-const x = false;
+import { bar } from './NavBar.module.scss';
 
+// Contains Nav
 const NavBar = props => (
-  <nav>
-    {x && <div className={block}>here</div>}
-    <div className={bar}>
+  <nav className={bar}>
       {props.children}
-    </div>
   </nav>
-)
+);
 
 export default NavBar;

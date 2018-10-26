@@ -1,20 +1,21 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import monetize from '../../helpers/monetize';
-import { table, subHeading } from './Portfolio.module.scss';
+import axios                from 'axios';
+import monetize             from '../../helpers/monetize';
+
 import Loader from '../Loader';
 
-export default class Portfolio extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      shareTable: null,
-      total: '',
-      loading: true,
-      balance: ''
-    }
-  }
+import { table, subHeading } from './Portfolio.module.scss';
 
+// Gets portfolio information from server
+export default class Portfolio extends Component {
+  state = {
+    balance: '',
+    loading: true,
+    shareTable: null,
+    total: '',
+  };
+
+  // Get portfolio upon load
   async componentDidMount() {
     const done = await this.getPortfolio();
     console.log(done);
@@ -24,24 +25,28 @@ export default class Portfolio extends Component {
     const token = localStorage.getItem('token');
     try {
       const data = await axios('/portfolio', { headers: { authorization: `Bearer ${token}` } })
-
-      const shareTable = data.data.shares.map(row => (
+      const shareInfo = data.data.shares;
+      
+      // Format results to table
+      const shareTable = shareInfo.map(row => (
         <tr key={row.symbol}>
           <td>{row.symbol.toUpperCase()}</td>
           <td>{monetize(row.price).toFixed(2)}</td>
           <td>{row.amount}</td>
         </tr>
       ));
-
-      const total = data.data.shares.reduce((acc, row) => (acc + (row.price * row.amount)), 0);
+      
+      // Get total share worth
+      const total = shareInfo.reduce((acc, row) => (acc + (row.price * row.amount)), 0);
       const balance = data.data.balance;
 
+      // Display portfolio information
       this.setState({
         balance,
         shareTable,
+        loading: false,
         total: monetize(total).toFixed(2),
-        loading: false
-      })
+      });
     } catch (e) {
       console.log(e);
       this.setState({
@@ -52,6 +57,8 @@ export default class Portfolio extends Component {
 
   render() {
     const { shareTable, total, balance, loading } = this.state;
+    
+    // If data exists, display info otherwise nothing message
     const loaded = shareTable ? (
       <div>
         <h3 className={subHeading}>Total Share Worth: ${total}</h3>
@@ -69,8 +76,9 @@ export default class Portfolio extends Component {
       <div>
         <p>here's nothing here!</p>
       </div>
-    )
-
+    );
+    
+    // Displys either loading animation or portfolio
     return (
       <div>
         {loading ? (
@@ -82,6 +90,6 @@ export default class Portfolio extends Component {
           </div>
         )}
       </div>
-    )
+    );
   }
 }

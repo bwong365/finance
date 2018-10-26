@@ -1,31 +1,27 @@
-import React from 'react';
-import { render } from 'react-dom';
+import React        from 'react';
+import { render }   from 'react-dom';
 import { Provider } from 'react-redux';
 
-import configureStore from './store';
+import configureStore    from './store';
+import makeAuthenticator from './components/hoc/makeAuthenticator';
+import makeResponsive    from './components/hoc/makeResponsive';
+
 import App from './components/App';
-import * as serviceWorker from './serviceWorker';
+
 import './index.scss';
 
-import responsive from './components/hoc/responsive'
-import authenticator from './components/hoc/authenticator'
-
+// Initialize Redux store
 const store = configureStore();
 
-const AuthenticatedApp = authenticator(App);
-const ResponsiveApp = responsive(AuthenticatedApp);
+// Apply hoc
+const AuthenticatedApp = makeAuthenticator(App);
+const ResponsiveApp = makeResponsive(AuthenticatedApp);
 
 render(
   <Provider store={store}>
     <div>
       <ResponsiveApp />
     </div>
-
   </Provider>,
   document.getElementById('root')
 );
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
-//serviceWorker.unregister();

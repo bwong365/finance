@@ -1,24 +1,24 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import axios from 'axios';
-import { withRouter, Link } from 'react-router-dom'
-import { setUsername } from '../../../actions/auth.actions'
-import Button from '../../form/Button'
-import TextInput from '../../form/TextInput'
-import Message from '../../form/Message'
-import Loader from '../../Loader'
+import { withRouter, Link } from 'react-router-dom';
+import { connect }          from 'react-redux';
+import axios                from 'axios';
+import { setUsername }      from '../../../actions/authActions';
 
+import Button    from '../../form/Button';
+import Loader    from '../../Loader';
+import Message   from '../../form/Message';
+import TextInput from '../../form/TextInput';
+
+// Form for login
 class LoginForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      username: '',
-      password: '',
-      message: '',
-      loading: false
-    }
-  }
+  state = {
+    loading: false,
+    message: '',
+    password: '',
+    username: '',
+  };
 
+  // Clear local storage upon reaching login page
   componentDidMount() {
     localStorage.clear();
   }
@@ -26,14 +26,17 @@ class LoginForm extends Component {
   handleChange = e => {
     this.setState({
       [e.target.name]: e.target.value
-    })
+    });
   }
 
   submitForm = e => {
     e.preventDefault();
+    // Start animation
     this.setState({
       loading: true
-    })
+    });
+    
+    // Call server for user verification
     axios.post('/login', {
       username: this.state.username,
       password: this.state.password
@@ -42,23 +45,25 @@ class LoginForm extends Component {
   }
 
   handleResponse = res => {
+    // Upon success, indicate success and set token and username
     if (res.request.status === 200) {
       this.setState({
+        loading: false,
+        message: 'Success!',
         username: '',
         password: '',
-        loading: false,
-        message: 'Success!'
       });
       localStorage.setItem('token', res.data.token);
       this.props.setUsername(res.data.username);
 
+      // Redirect to home page
       this.props.history.push('/');
 
     } else {
       this.setState({
         message: 'Could not be logged in',
         loading: false
-      })
+      });
     }
   }
 
@@ -67,7 +72,7 @@ class LoginForm extends Component {
     this.setState({
       loading: false,
       message: 'Could not be logged in'
-    })
+    });
   }
 
   render() {
@@ -76,19 +81,23 @@ class LoginForm extends Component {
         <TextInput type='text' name='username' value={this.state.username} onChange={this.handleChange} label='username'/>
         <TextInput type='password' name='password' value={this.state.password} onChange={this.handleChange} label='password'/>
         <Button onClick={this.submitForm} label='Submit' />
-        {this.state.loading
-          ? <Loader /> 
-          : (<div>
-               <Message text={this.state.message}/>
-               <span>Don't have an account? <Link to='/register'>Register here!</Link></span>
-              </div>
-        )}
+        {
+          (this.state.loading)
+            ? <Loader /> 
+            : (
+                <div>
+                  <Message text={this.state.message}/>
+                  <span>Don't have an account? <Link to='/register'>Register here!</Link></span>
+                </div>
+              )
+        }
 
       </form>
     );
   }
 }
 
+// Map dispatch to props, and allow for redirect through router history
 export default connect(
   null,
   { setUsername }

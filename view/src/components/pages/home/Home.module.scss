@@ -6,8 +6,8 @@
 .bannerContainer {
   min-height: 100px;
   max-height: 200px;
-  overflow: hidden;
   margin: 0 auto;
+  overflow: hidden;
   width: 100%;
   @media only screen and (max-width: 1024px) {
     height: 100px;
@@ -22,9 +22,8 @@
 }
 
 .banner {
-  width: 100%;
-  position: relative;
   left: 50%;
+  position: relative;
   transform: translateY(-25%) translateX(-50%);
-  
+  width: 100%;
 }

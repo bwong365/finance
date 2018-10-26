@@ -1,3 +1,7 @@
+/**
+ * Gatekeeping middleware
+ * Disallow non-positive shares for sale or purchase
+ */
 module.exports = function validateShareRequest(req, res, next) {
   const { shares } = req.body;
 

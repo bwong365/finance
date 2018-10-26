@@ -1,8 +1,9 @@
 import React from 'react';
-import { flex, banner, bannerContainer, heading } from './Sell.module.scss';
-import bannerImg from './banner1.jpg'
-import SellForm from './SellForm'
 
+import SellForm from './SellForm';
+
+import bannerImg from './banner1.jpg';
+import { flex, banner, bannerContainer, heading } from './Sell.module.scss';
 
 const Sell = props => (
   <div>
@@ -14,6 +15,6 @@ const Sell = props => (
       <SellForm />
     </div>
   </div>
-)
+);
 
 export default Sell;

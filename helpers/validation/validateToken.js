@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
  */
 module.exports = function requireToken(req, res, next) {
   // Get token from bearerHeader
-  const secret = process.env.JWT_SECRET_OR_KEY
+  const secret = process.env.JWT_SECRET_OR_KEY;
   const value = req.headers.authorization;
 
   // Abort if the token is of an invalid format or does not exist
@@ -25,12 +25,12 @@ module.exports = function requireToken(req, res, next) {
       console.log(err);
       return res.sendStatus(403);
     }
-    console.log(decoded);
+
     // Find whether the decoded user exists in the database
     const query = {
       text: 'SELECT username FROM users WHERE username = $1',
       values: [decoded.username]
-    }
+    };
 
     db.query(query)
       .then(dbData => {

@@ -1,6 +1,10 @@
+/**
+ * After validation of token, send username back to client
+ */
 module.exports = function confirmToken(req, res) {
-  console.log('here');
+  const { username } = req;
+  
   res.status(200).json({
-    username: req.username
-  })
+    username
+  });
 }

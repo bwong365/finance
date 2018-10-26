@@ -1,14 +1,15 @@
-import React from 'react'
+import React from 'react';
 
 import {
-  container,
   background,
+  childContainer,
+  container,
   formContainer,
   heading,
-  childContainer
-} from './FormContainer.module.scss'
+} from './FormContainer.module.scss';
 
-const Login = props => (
+// Wraps a form, used in login and registration pages
+const FormContainer = props => (
   <div className={container}>
     <div className={background}></div>
     <div className={formContainer}>
@@ -18,6 +19,6 @@ const Login = props => (
       </div>
     </div>
   </div>
-)
+);
 
-export default Login;
+export default FormContainer;

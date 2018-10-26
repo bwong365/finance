@@ -1,65 +1,65 @@
 // Dependencies
-import React, { Component }      from 'react';
+import React                     from 'react';
+import { Router, Switch, Route } from 'react-router-dom';
 import { connect }               from 'react-redux';
-import { Router, Switch, Route } from 'react-router-dom'
-import createBrowserHistory      from 'history/createBrowserHistory'
+import createBrowserHistory      from 'history/createBrowserHistory';
+import makeRequireLogin          from '../components/hoc/makeRequireLogin';
 
 // Components
-import Home          from './pages/home/Home'
-import Login         from './pages/login/LoginPage'
-import Register      from './pages/register/RegistrationPage'
-import NotFound      from './pages/not-found/NotFound'
-import Nav from './nav/Nav'
-import Logout from './pages/logout/Logout'
-import Buy from './pages/buy/Buy';
-import Sell from './pages/sell/Sell';
-import Loader from './Loader';
-import Lookup from './pages/lookup/Lookup';
+import Buy           from './pages/buy/Buy';
+import Home          from './pages/home/Home';
+import Loader        from './Loader';
+import Login         from './pages/login/LoginPage';
+import Logout        from './pages/logout/Logout';
+import Nav           from './nav/Nav';
+import NotFound      from './pages/not-found/NotFound';
+import Register      from './pages/register/RegistrationPage';
+import Sell          from './pages/sell/Sell';
 
-import { spacer, appClass, flex, main } from './App.module.scss'
+// Style
+import { spacer, appClass, flex, main } from './App.module.scss';
 
-import requireLogin from '../components/hoc/requireLogin'
 const history = createBrowserHistory();
 
 // Apply HOCs outside render
-const protectedHome = requireLogin(Home);
-const protectedBuy = requireLogin(Buy);
-const protectedSell = requireLogin(Sell)
+const protectedHome = makeRequireLogin(Home);
+const protectedBuy  = makeRequireLogin(Buy);
+const protectedSell = makeRequireLogin(Sell);
 
-class App extends Component {
+const App = props => {
+  const { username, authenticating } = props;
   
-  render() {
-    const { username, authenticating } = this.props;
-    console.log(username);
-    return (
-      <Router history={history}>
-        <div className={appClass}>
-          {authenticating ? (
-            <div className={spacer}>
-              <Loader />
-            </div>
-          ) : (
-            <div className={flex}>
-              {username.length > 0 && <Nav />}
-              <div className={main}>
-                <Switch>
-                  <Route exact path='/' component={protectedHome} />
-                  <Route path='/buy' component={protectedBuy} />
-                  <Route path='/sell' component={protectedSell} />*/}
-                  <Route path='/register' component={Register} />
-                  <Route path='/login' component={Login} />
-                  <Route path='/logout' component={Logout} />
-                  <Route path='*' component={NotFound} />
-                </Switch>
+  return (
+    <Router history={history}>
+      <div className={appClass}>
+        {
+            authenticating ? (
+              <div className={spacer}>
+                <Loader />
               </div>
-            </div>
-          )}
-        </div>
-      </Router>
-    );
-  }
+            ) : (
+              <div className={flex}>
+                {username.length > 0 && <Nav />}
+                <div className={main}>
+                  <Switch>
+                    <Route exact path='/' component={protectedHome} />
+                    <Route path='/buy' component={protectedBuy} />
+                    <Route path='/sell' component={protectedSell} />*/}
+                    <Route path='/register' component={Register} />
+                    <Route path='/login' component={Login} />
+                    <Route path='/logout' component={Logout} />
+                    <Route path='*' component={NotFound} />
+                  </Switch>
+                </div>
+              </div>
+            )
+        }
+      </div>
+    </Router>
+  );
 }
 
+// Map state to props
 export default connect(
   state => ({
     authenticating: state.auth.authenticating,

@@ -1,46 +1,51 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import Loader from '../Loader';
-import monetize from '../../helpers/monetize'
-import { form, mini } from './GetQuotes.module.scss'
-import Button from '../form/Button'
+import axios                from 'axios';
+import monetize             from '../../helpers/monetize'
 
+import Button from '../form/Button'
+import Loader from '../Loader';
+
+import { form, mini } from './GetQuotes.module.scss'
+
+// Gets a quote, currently contained in buy form
 export default class GetQuote extends Component {
   state = {
-    stock: '',
+    loading: false,
     result: '',
-    loading: false
-  }
+    stock: '',
+  };
 
   handleChange = e => {
     this.setState({
       stock: e.target.value
-    })
+    });
   }
 
   lookup = async e => {
     e.preventDefault();
-    this.setState({ loading: true, result: '' })
+    this.setState({ loading: true, result: '' });
+
+    // Call server for info on stock
     const token = localStorage.getItem('token');
     try {
       const result = await axios('/search?keywords=' + this.state.stock, { headers: { authorization: `Bearer ${token}` } })
-      console.log(result);
       const { symbol, name, price } = result.data;
       
+      // Display results
       this.setState({
-        stock: '',
+        loading: false,
         result: `${symbol}, $${monetize(price).toFixed(2)}, ${name}`,
-        loading: false
-      })
+        stock: '',
+      });
+
     } catch (e) {
       console.log(e);
       this.setState({
-        stock: '',
+        loading: false,
         result: 'Nothing found!',
-        loading: false
-      })
-    }
-    
+        stock: '',
+      });
+    }  
   }
 
   render() {

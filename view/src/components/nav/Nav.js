@@ -1,14 +1,22 @@
-import React from 'react';
-import NavBar from './NavBar';
+import React       from 'react';
+import { Link }    from 'react-router-dom'
 import { connect } from 'react-redux';
-import { list, left, right, link, normal, small } from './Nav.module.scss';
-import { Link } from 'react-router-dom'
 
+import NavBar from './NavBar';
+
+import {
+  left,
+  link,
+  list,
+  normal,
+  right, 
+  small } from './Nav.module.scss';
 
 const Nav = props => {
+  // Change width of links depending on props.expanded
   const varSize = (props.expanded)
     ? normal
-    : small
+    : small;
 
   return (
     <NavBar>
@@ -30,9 +38,10 @@ const Nav = props => {
         </li>
       </ul>
     </NavBar>
-  )
+  );
 }
 
+// Map state to props
 export default connect(
   state => ({ username: state.auth.username, expanded: state.expanded })
 )(Nav);

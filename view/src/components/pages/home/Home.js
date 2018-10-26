@@ -1,13 +1,16 @@
-import React from 'react';
+import React       from 'react';
 import { connect } from 'react-redux';
-import capitalize from '../../../helpers/capitalize';
-import { portfolioContainer, banner, bannerContainer, heading } from './Home.module.scss';
-import bannerImg from './banner2.jpg'
+import capitalize  from '../../../helpers/capitalize';
+
 import Portfolio from '../../stock/Portfolio';
 
+import bannerImg from './banner2.jpg';
+import { portfolioContainer, banner, bannerContainer, heading } from './Home.module.scss';
 
-const Home = (props) => {
+// Home page, contains Portfolio information
+const Home = props => {
   const username = capitalize(props.username);
+  
   return (
     <div>
       <div className={bannerContainer}>
@@ -18,9 +21,10 @@ const Home = (props) => {
         <Portfolio />
       </div>
     </div>
-  )
+  );
 }
 
+// map state to props
 export default connect(
   state => ({ username: state.auth.username })
 )(Home);

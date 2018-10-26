@@ -1,20 +1,28 @@
-// get /search:keyword
 const axios = require('axios');
 
+/**
+ * Middleware
+ * Calls AlphaVantage to search for stock information based on
+ * partial or complete keywords, and attaches the top match
+ * to the request.
+ */
 module.exports = async function searchStock(req, res, next) {
   const { keywords } = req.query;
-  const apiKey = process.env.AV_API
+  const apiKey = process.env.AV_API;
   const url = 'https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords='
-
-  const uri = url + keywords + '&apikey=' + apiKey;
-  console.log(apiKey);
+  const query = url + keywords + '&apikey=' + apiKey;
+  
   try {
-    const searchResults = await axios(uri);
+    // Call AlphaVantage
+    const searchResults = await axios(query);
+
+    // If there are no results return 404, otherwise attach top result to request
     const topResult = searchResults.data.bestMatches[0];
     if (topResult == undefined) return res.sendStatus(404);
     req.topResult = topResult;
     
-    req.body.symbol = topResult['1. symbol']
+    // Attach the symbol to the request body for the getQuote middleware
+    req.body.symbol = topResult['1. symbol'];
     next();
   } catch (e) {
     console.log(e);

@@ -4,11 +4,12 @@
 }
 
 .bannerContainer {
-  min-height: 100px;
-  max-height: 200px;
-  overflow: hidden;
   margin: 0 auto;
+  max-height: 200px;
+  min-height: 100px;
+  overflow: hidden;
   width: 100%;
+  
   @media only screen and (max-width: 1024px) {
     height: 100px;
   }
@@ -20,6 +21,6 @@
 
 .flex {
   display: flex;
-  justify-content: center;
   flex-direction: column;
+  justify-content: center;
 }
